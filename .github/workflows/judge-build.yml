@@ -1,0 +1,41 @@
+name: JUDGE CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'judge/**'
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    # 4. Login DockerHub
+    - name: Login
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: zikanwari
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: meta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+          images: ghcr.io/OMZH-ScITechS/MaiCoder
+    # 5. setup buildx
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: api
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ghcr.io/OMZH-ScITechS/MaiCoder:judge
