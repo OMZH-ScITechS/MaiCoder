@@ -1,0 +1,68 @@
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+main {
+    margin: auto;
+    padding: 40px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+label {
+    line-height: 1.4;
+}
+
+select {
+    border: 1px #ccc solid;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 16px;
+    border: 1px #ccc solid;
+    border-radius: 4px;
+}
+
+button.primary {
+    background-color: #2476ea;
+    border: 1px #005ee1 solid;
+    color: #fff;
+}
+
+textarea{
+    padding: 8px 16px;
+    border: 1px #ccc solid;
+    border-radius: 4px;
+}
+
+textarea.monospace {
+    font-family: monospace;
+}
+
+button:active {
+    background-color: #eee;
+}
+
+button.primary:active {
+    background-color: #0f5bc6;
+}
+
+#editor {
+    border: 1px #ccc solid;
+    border-radius: 4px;
+}
+
+.output {
+    padding: 8px 16px;
+    border: 1px #ccc solid;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    overflow-y: scroll;
+}

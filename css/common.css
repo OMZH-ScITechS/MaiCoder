@@ -6,7 +6,7 @@ body {
     width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 52px;
 }
 
 form {
@@ -26,18 +26,33 @@ textarea.input {
 }
 
 select.compiler {
-    padding: 5px 9px;
     width: fit-content;
 }
 
 form button {
-    padding: 5px 9px;
     width: fit-content;
 }
 
 .output{
     width: 100%;
     min-height: 100px;
-    background-color: #eee;
-    overflow-y: scroll;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: #222;
+    color: #fff;
+    justify-content: space-between;
+}
+
+header div {
+    display: flex;
+    gap: 25px;
+}
+
+header h1 {
+    font-size: 20px;
 }
