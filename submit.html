@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提出</title>
+    <style>
+        form {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        form textarea.code {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>提出</h1>
+    <!--・言語
+・コード
+・入力-->
+    <form>
+        <select class="compiler">
+            <option value="pypy-3.7-v7.3.9">Python:pypy-3.7-v7.3.9</option>
+        </select>
+        <label>
+            コード:
+            <textarea name="" class="code"></textarea>
+        </label>
+        <label>
+            標準入力:
+            <textarea class="input"></textarea>
+        </label>
+        <button type="button" onclick="test()">提出</button>
+    </form>
+    <code>
+    </code>
+
+    <script>
+        function test() {
+            let $compiler = document.querySelector("select.compiler")
+            let $code = document.querySelector("textarea.code")
+            let $stdin = document.querySelector("textarea.input")
+            new Submission($compiler.value, $code.value, $stdin.value).send()
+        }
+
+        class Submission {
+            constructor(compiler, code, stdin) {
+                this.compiler = compiler
+                this.code = code
+                this.stdin = stdin
+            }
+            send() {
+                let $code = document.querySelector("code")
+                let body = {
+                    compiler: this.compiler,
+                    code: this.code,
+                    stdin: this.stdin
+                }
+                $code.innerHTML = JSON.stringify(body)
+                navigator.clipboard.writeText(JSON.stringify(body))
+            }
+        }
+    </script>
+</body>
+
+</html>
