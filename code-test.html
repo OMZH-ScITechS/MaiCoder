@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コードテスト</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+</head>
+
+<body>
+    <h1>コードテスト</h1>
+    <div class="form-container">
+        <form>
+            <label>
+                言語:
+                <select class="compiler" onchange="compiler_change()">
+                    <option value="python">Python:pypy-3.7-v7.3.9</option>
+                    <option value="c++">C++:gcc-head</option>
+                    <option value="rust">Rust:rust-1.82.0</option>
+                </select>
+            </label>
+
+            <label>
+                コードテスト:
+                <div id="editor"></div>
+            </label>
+
+            <label>
+                標準入力:
+                <textarea class="input"></textarea>
+            </label>
+            <button type="button">実行</button>
+        </form>
+
+        <label>
+            標準出力:
+            <div class="output">
+                <code></code>
+            </div>
+        </label>
+    </div>
+    <script>
+        const editor = ace.edit("editor")
+        function compiler_change() {
+            let compiler = document.querySelector("select.compiler").value
+            editor.session.setMode(`ace/mode/${compiler}`);
+        }
+        compiler_change()
+    </script>
+</body>
+
+</html>

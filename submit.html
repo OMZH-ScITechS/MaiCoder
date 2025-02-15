@@ -6,20 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/common.css">
     <title>提出</title>
-    <style>
-        form {
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
 
-        form textarea.code {
-            width: 500px;
-            height: 300px;
-        }
-    </style>
 </head>
 
 <body>
@@ -27,25 +16,28 @@
     <!--・言語
 ・コード
 ・入力-->
-    <form>
-        <select class="compiler">
-            <option value="pypy-3.7-v7.3.9">Python:pypy-3.7-v7.3.9</option>
-            <option value="gcc-head">C++:gcc-head</option>
-            <option value="rust-1.82.0">Rust:rust-1.82.0</option>
-        </select>
-        <label>
-            コード:
-            <textarea name="" class="code"></textarea>
-        </label>
-        <label>
-            標準入力:
-            <textarea class="input"></textarea>
-        </label>
-        <button type="button" onclick="test()">提出</button>
-    </form>
-    <code>
-    </code>
-
+    <div class="form-container">
+        <form>
+            <label>
+                言語:
+                <select class="compiler">
+                    <option value="pypy-3.7-v7.3.9">Python:pypy-3.7-v7.3.9</option>
+                    <option value="gcc-head">C++:gcc-head</option>
+                    <option value="rust-1.82.0">Rust:rust-1.82.0</option>
+                </select>
+            </label>
+            <label>
+                コード:
+                <textarea name="" class="code"></textarea>
+            </label>
+            <label>
+                標準入力:
+                <textarea class="input"></textarea>
+            </label>
+            <button type="button" onclick="test()">提出</button>
+        </form>
+        <code></code>
+    </div>
     <script>
         function test() {
             let $compiler = document.querySelector("select.compiler")
