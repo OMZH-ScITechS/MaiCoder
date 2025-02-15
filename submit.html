@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>提出</title>
     <style>
         form {
@@ -28,6 +30,8 @@
     <form>
         <select class="compiler">
             <option value="pypy-3.7-v7.3.9">Python:pypy-3.7-v7.3.9</option>
+            <option value="gcc-13.2.0-c">C++:gcc-13.2.0-c</option>
+            <option value="rust-1.81.0">Rust:rust-1.81.0</option>
         </select>
         <label>
             コード:
