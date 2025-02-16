@@ -48,9 +48,21 @@
                         <td>入力</td>
                         <td>出力</td>
                     </tr>
+                    <tr>
+                        <th>1</th>
+                        <td>
+                            <textarea></textarea>
+                        </td>
+                        <td>
+                            <textarea></textarea>
+                        </td>
+                        <td>
+                            <button>削除</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <button onclick="add_test_case()" class="primary">追加</button>
+            <button onclick="add_test_case()" class="primary">テストケースを追加</button>
         </section>
     </main>
     <script>
@@ -68,6 +80,22 @@
         function preview() {
             document.getElementById('content').innerHTML = marked.parse((editor.getValue()));
         }
+
+        data = {
+            id:'000',
+            probrem: '# markdown',
+            test_case: [
+                {
+                    in: '0 1',
+                    out: '20'
+                },
+                {
+                    in: '3 1',
+                    out: '10'
+                },
+            ]
+        }
+        
     </script>
 </body>
 
