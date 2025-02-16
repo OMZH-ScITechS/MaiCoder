@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100..900&display=swap');
+
+
 body {
-    font-size: 16px;
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    font-family: "Lato", "Noto Sans JP", serif;
 }
 
 .form-container {
@@ -16,7 +22,8 @@ form {
     gap: 12px;
 }
 
-form textarea.code,#editor {
+form textarea.code,
+#editor {
     width: 100%;
     height: 300px;
 }
@@ -33,7 +40,7 @@ form button {
     width: fit-content;
 }
 
-.output{
+.output {
     width: 100%;
     min-height: 100px;
     max-height: 300px;
@@ -69,9 +76,18 @@ header h1 {
     animation: l1 1s infinite;
 }
 
-@keyframes l1 {to{transform: rotate(.5turn)}}
+@keyframes l1 {
+    to {
+        transform: rotate(.5turn)
+    }
+}
 
-table td,th{
+table td,
+th {
     padding: 4px;
     vertical-align: middle;
+}
+
+ul {
+    list-style: disc;
 }
