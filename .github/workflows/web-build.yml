@@ -5,8 +5,7 @@ on:
   push:
     paths:
       - 'web/**'
-    paths-ignore:
-      - 'web/problem/**'
+      - '!web/problem/**'
 
 jobs:
   main:
