@@ -83,3 +83,25 @@ button.primary:active {
     background-color: #f4f4f4;
     overflow-y: scroll;
 }
+
+.editor-container {
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.editor-container #editor {
+    width:100%;
+}
+
+.editor-container #content {
+    width: 100%;
+    line-height: 1.5;
+}
+
+pre:has(code){
+    padding: 20px;
+    background-color: #eee;
+}

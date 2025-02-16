@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <template>
+        <tr>
+            <th>1</th>
+            <td>
+                <textarea></textarea>
+            </td>
+            <td>
+                <textarea></textarea>
+            </td>
+            <td>
+                <button>削除</button>
+            </td>
+        </tr>
+    </template>
+    <header>
+        <img src="img/logo.svg" alt="MaiCoder">
+        <div>
+            <a href="code-test.html">コードテスト</a>
+        </div>
+    </header>
+    <main>
+        <h1>作問エディタ</h1>
+        <section class="editor-container">
+            <div id="editor" onkeyup="preview()"></div>
+            <div id="content"></div>
+        </section>
+        <h1>テストケース</h1>
+        <section class="test_case-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <th></th>
+                        <td>入力</td>
+                        <td>出力</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="add_test_case()" class="primary">追加</button>
+        </section>
+    </main>
+    <script>
+        const editor = ace.edit("editor", {
+            fontSize: "15px"
+        })
+
+        document.querySelector(".ace_text-input").addEventListener('keyup', preview)
+
+        function add_test_case() {
+            const row = document.querySelector("template").content.cloneNode(true)
+            document.querySelector("tbody").appendChild(row)
+        }
+
+        function preview() {
+            document.getElementById('content').innerHTML = marked.parse((editor.getValue()));
+        }
+    </script>
+</body>
+
+</html>

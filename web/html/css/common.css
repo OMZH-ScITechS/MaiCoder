@@ -61,7 +61,7 @@ header h1 {
 
 /* HTML: <div class="loader"></div> */
 .loader {
-    width: 20px;
+    width: 18px;
     aspect-ratio: 1;
     border-radius: 50%;
     border: 3px solid;
@@ -70,3 +70,8 @@ header h1 {
 }
 
 @keyframes l1 {to{transform: rotate(.5turn)}}
+
+table td{
+    padding: 4px;
+    vertical-align: middle;
+}
