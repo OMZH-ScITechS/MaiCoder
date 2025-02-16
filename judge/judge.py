@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/api/judge/wandbox")
+@app.get("/judge/test")
 async def root(code: str = '',compiler: str = '',stdin: str = ''):
     ut = float(time.time())
     
