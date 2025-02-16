@@ -19,6 +19,7 @@ async def fetch_html_content(url: str) -> str:
     try:
         response = requests.get(url)
         response.raise_for_status()
+        response.encoding = response.apparent_encoding  # Ensure correct encoding
         return response.text
     except requests.HTTPError:
         return "<h1>Failed to fetch content</h1>"
