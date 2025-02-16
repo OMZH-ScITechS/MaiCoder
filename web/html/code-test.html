@@ -31,20 +31,21 @@
                         <option value="rust">Rust:rust-1.82.0</option>
                     </select>
                 </label>
-    
+
                 <label>
                     コードテスト:
                     <div id="editor"></div>
                 </label>
-    
+
                 <label>
                     標準入力:
                     <textarea class="input monospace"></textarea>
                 </label>
-                <button type="button" class="primary">実行</button>
+                <button type="button" class="primary" onclick="go()">実行</button>
             </form>
-    
             <label>
+                <p>応答時間:<span class="speed"></span></p>
+                <br>
                 標準出力:
                 <div class="output">
                     <code></code>
@@ -53,13 +54,48 @@
         </div>
     </main>
     <script>
-        const editor = ace.edit("editor",{
+        const editor = ace.edit("editor", {
             fontSize: "15px"
         })
+
+        async function getData(data) {
+            const url = "https://api.maicoder.f5.si/judge/test";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                });
+                if (!response.ok) {
+                    throw new Error(`レスポンスステータス: ${response.status}`);
+                }
+                const json = await response.json();
+                return json
+            } catch (error) {
+                return error
+            }
+        }
+
+        async function go() {
+            let data = {
+                compiler: 'pypy-3.7-v7.3.9', //一旦
+                code: editor.getValue(),
+                stdin: document.querySelector("textarea.input").value
+            }
+            const response = await getData(data)
+
+            let $output = document.querySelector(".output code")
+            let $speed = document.querySelector("span.speed")
+
+            $output.innerHTML = response.message.program_message
+            $speed.innerHTML = Math.round(response.speed * 100) + ' ms'
+        }
+
         function compiler_change() {
             let compiler = document.querySelector("select.compiler").value
             editor.session.setMode(`ace/mode/${compiler}`);
         }
+
+
         compiler_change()
     </script>
 </body>
