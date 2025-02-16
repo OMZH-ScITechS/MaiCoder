@@ -25,6 +25,9 @@ async function go() {
         code: editor.getValue(),
         stdin: document.querySelector("textarea.input").value
     }
+
+    console.log(data)
+
     let $button = document.querySelector("button.go")
     $button.classList.add("loading")
 
