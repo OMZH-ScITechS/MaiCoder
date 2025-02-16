@@ -21,7 +21,7 @@ async function getData(data) {
 
 async function go() {
     let data = {
-        compiler: 'pypy-3.7-v7.3.9', //一旦
+        compiler: document.querySelector("select.compiler").value,
         code: editor.getValue(),
         stdin: document.querySelector("textarea.input").value
     }
