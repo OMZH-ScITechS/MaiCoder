@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-file_path = "/templates/problem/problem.html"
+file_path = "https://maicoder.f5.si/templates/problem/problem.html"
 
 async def read_html_file(file_path: str) -> str:
     try:
