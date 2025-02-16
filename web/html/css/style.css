@@ -5,6 +5,7 @@ h1 {
 
 main {
     margin: auto;
+    max-width: 800px;
     padding: 40px;
     background-color: #ffffff;
     display: flex;
@@ -96,7 +97,7 @@ button.primary:active {
     width:100%;
 }
 
-.editor-container #content {
+#content {
     width: 100%;
     line-height: 1.5;
 }
@@ -116,4 +117,8 @@ pre:has(code){
 .test_case-container textarea {
     min-height: 60px;
     width: 300px;resize: vertical;
+}
+
+#content h1{
+    margin-top: 30px;
 }

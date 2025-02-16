@@ -20,7 +20,7 @@
         </div>
     </header>
     <main>
-        <h1>問題文</h1>
+        <h1>タイトル</h1>
         <div id="content"></div>
         <h1>提出</h1>
         <div class="form-container">
@@ -37,24 +37,10 @@
                     コードテスト:
                     <div id="editor"></div>
                 </label>
-
-                <label>
-                    標準入力:
-                    <textarea class="input monospace"></textarea>
-                </label>
-                <button type="button" class="primary go" onclick="go()">
-                    <p>実行<span>中...</span></p>
-                    <div class="loader"></div>
+                <button type="button" class="primary submit" onclick="go()">
+                    <p>提出</p>
                 </button>
             </form>
-            <label>
-                <p>応答時間:<span class="speed"></span></p>
-                <br>
-                標準出力:
-                <div class="output">
-                    <code></code>
-                </div>
-            </label>
         </div>
     </main>
     <script src="js/submit.js"></script>
