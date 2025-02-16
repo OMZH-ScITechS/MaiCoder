@@ -24,12 +24,12 @@ async def fetch_html_content(url: str) -> str:
     except requests.HTTPError:
         return "<h1>Failed to fetch content</h1>"
 
-@app.get("/contest/", response_class=HTMLResponse)
-async def get_contest_page():
+@app.get("/contest/{subpath:path}", response_class=HTMLResponse)
+async def get_contest_page(subpath: str):
     content = await fetch_html_content(file_url)
     return HTMLResponse(content=content)
 
-@app.get("/quiz/", response_class=HTMLResponse)
-async def get_quiz_page():
+@app.get("/quiz/{subpath:path}", response_class=HTMLResponse)
+async def get_quiz_page(subpath: str):
     content = await fetch_html_content(file_url)
     return HTMLResponse(content=content)
