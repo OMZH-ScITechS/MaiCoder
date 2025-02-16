@@ -1,4 +1,4 @@
-name: JUDGE CI
+name: WEB PROBLEM CI
 
 on:
   workflow_dispatch:
