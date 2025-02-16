@@ -1,24 +1,43 @@
-function test() {
-    let $compiler = document.querySelector("select.compiler")
-    let $code = document.querySelector("textarea.code")
-    let $stdin = document.querySelector("textarea.input")
-    new Submission($compiler.value, $code.value, $stdin.value).send()
+const editor = ace.edit("editor", {
+    fontSize: "15px"
+})
+
+async function getData(data) {
+    const url = "https://api.maicoder.f5.si/judge/test";
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            throw new Error(`レスポンスステータス: ${response.status}`);
+        }
+        const json = await response.json();
+        return json
+    } catch (error) {
+        return error
+    }
 }
 
-class Submission {
-    constructor(compiler, code, stdin) {
-        this.compiler = compiler
-        this.code = code
-        this.stdin = stdin
+async function go() {
+    let data = {
+        compiler: 'pypy-3.7-v7.3.9', //一旦
+        code: editor.getValue(),
+        stdin: document.querySelector("textarea.input").value
     }
-    send() {
-        let $code = document.querySelector("code")
-        let body = {
-            compiler: this.compiler,
-            code: this.code,
-            stdin: this.stdin
-        }
-        $code.innerHTML = JSON.stringify(body)
-        navigator.clipboard.writeText(JSON.stringify(body))
-    }
+    const response = await getData(data)
+
+    let $output = document.querySelector(".output code")
+    let $speed = document.querySelector("span.speed")
+
+    $output.innerHTML = response.message.program_message
+    $speed.innerHTML = Math.round(response.speed * 100) + ' ms'
 }
+
+function compiler_change() {
+    let compiler = document.querySelector("select.compiler").value
+    editor.session.setMode(`ace/mode/${compiler}`);
+}
+
+
+compiler_change()
