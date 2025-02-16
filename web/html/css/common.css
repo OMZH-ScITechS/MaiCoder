@@ -37,6 +37,7 @@ form button {
     width: 100%;
     min-height: 100px;
     max-height: 300px;
+    overflow-y: scroll;
 }
 
 header {
@@ -60,7 +61,7 @@ header h1 {
 
 /* HTML: <div class="loader"></div> */
 .loader {
-    width: 20px;
+    width: 18px;
     aspect-ratio: 1;
     border-radius: 50%;
     border: 3px solid;
@@ -69,3 +70,8 @@ header h1 {
 }
 
 @keyframes l1 {to{transform: rotate(.5turn)}}
+
+table td,th{
+    padding: 4px;
+    vertical-align: middle;
+}
