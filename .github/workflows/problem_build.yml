@@ -1,11 +1,9 @@
-name: WEB CI
+name: JUDGE CI
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'web/**'
-    paths-ignore:
       - 'web/problem/**'
 
 jobs:
@@ -37,7 +35,7 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        context: web
+        context: web/problem
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/omzh-scitechs/maicoder:web
+        tags: ghcr.io/omzh-scitechs/maicoder:web-problem

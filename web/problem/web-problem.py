@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import aiofiles
+import os
 
 app = FastAPI()
 
@@ -13,16 +14,21 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/contest/{directory}", response_class=HTMLResponse)
-async def get_contest_page(directory: str):
-    file_path = f"templates/contest/{directory}.html"
-    async with aiofiles.open(file_path, mode='r') as file:
-        content = await file.read()
+file_path = "templates/problem/problem.html"
+
+async def read_html_file(file_path: str) -> str:
+    try:
+        async with aiofiles.open(file_path, mode='r') as file:
+            return await file.read()
+    except FileNotFoundError:
+        return "<h1>File not found</h1>"
+
+@app.get("/contest/", response_class=HTMLResponse)
+async def get_contest_page():
+    content = await read_html_file(file_path)
     return HTMLResponse(content=content)
 
-@app.get("/quiz/{directory}", response_class=HTMLResponse)
-async def get_quiz_page(directory: str):
-    file_path = f"templates/quiz/{directory}.html"
-    async with aiofiles.open(file_path, mode='r') as file:
-        content = await file.read()
+@app.get("/quiz/", response_class=HTMLResponse)
+async def get_quiz_page():
+    content = await read_html_file(file_path)
     return HTMLResponse(content=content)
