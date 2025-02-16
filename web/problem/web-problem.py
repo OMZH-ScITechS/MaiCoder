@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-import httpx
+import requests
 
 app = FastAPI()
 
@@ -17,11 +17,10 @@ file_url = "https://maicoder.f5.si/templates/problem/problem.html"
 
 async def fetch_html_content(url: str) -> str:
     try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(url)
-            response.raise_for_status()
-            return response.text
-    except httpx.HTTPStatusError:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+    except requests.HTTPError:
         return "<h1>Failed to fetch content</h1>"
 
 @app.get("/contest/", response_class=HTMLResponse)
