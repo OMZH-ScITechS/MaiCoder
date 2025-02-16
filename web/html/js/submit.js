@@ -25,20 +25,22 @@ async function go() {
         code: editor.getValue(),
         stdin: document.querySelector("textarea.input").value
     }
-    console.log(data)
-    const response = await getData(data)
+    let $button = document.querySelector("button.go")
+    $button.classList.add("loading")
 
+    const response = await getData(data)
+    
     let $output = document.querySelector(".output code")
     let $speed = document.querySelector("span.speed")
 
+    $button.classList.remove("loading")
     $output.innerHTML = response.message.program_message
-    $speed.innerHTML = Math.round(response.speed * 100) + ' ms'
+    $speed.innerHTML = Math.round(response.speed * 1000) + ' ms'
 }
 
 function compiler_change() {
     let compiler = document.querySelector("select.compiler").value
     editor.session.setMode(`ace/mode/${compiler}`);
 }
-
 
 compiler_change()

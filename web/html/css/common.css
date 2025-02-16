@@ -56,3 +56,14 @@ header div {
 header h1 {
     font-size: 20px;
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid;
+    border-color: #ffffff #ffffff00;
+    animation: l1 1s infinite;
+  }
+  @keyframes l1 {to{transform: rotate(.5turn)}}

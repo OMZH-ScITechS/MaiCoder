@@ -40,7 +40,10 @@
                     標準入力:
                     <textarea class="input monospace"></textarea>
                 </label>
-                <button type="button" class="primary" onclick="go()">実行</button>
+                <button type="button" class="primary go" onclick="go()">
+                    <p>実行<span>中...</span></p>
+                    <div class="loader"></div>
+                </button>
             </form>
             <label>
                 <p>応答時間:<span class="speed"></span></p>
