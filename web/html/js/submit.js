@@ -25,6 +25,7 @@ async function go() {
         code: editor.getValue(),
         stdin: document.querySelector("textarea.input").value
     }
+    console.log(data)
     const response = await getData(data)
 
     let $output = document.querySelector(".output code")
