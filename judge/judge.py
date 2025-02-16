@@ -15,7 +15,7 @@ app.add_middleware(
 )
 
 @app.get("/judge/test")
-async def root(code: str = '',compiler: str = '',stdin: str = ''):
+async def root(code: str = 'print("hello world")',compiler: str = 'pypy-3.7-v7.3.9',stdin: str = ''):
     ut = float(time.time())
     
     url = "https://wandbox.org/api/compile.json"
@@ -30,10 +30,4 @@ async def root(code: str = '',compiler: str = '',stdin: str = ''):
     else:
         result = 'Error'
 
-    return {"message": result, "speed": ut-time.time()}
-
-def main():
-    uvicorn.run("project_name.main:app", host="0.0.0.0", reload=True)
-
-if __name__ == "__main__":
-    main()
+    return {"message": result, "speed": time.time()-ut}
