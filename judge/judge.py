@@ -33,7 +33,7 @@ async def root(code: str = '',compiler: str = '',stdin: str = ''):
     return {"message": result, "speed": ut-time.time()}
 
 def main():
-    uvicorn.run("project_name.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("project_name.main:app", host="0.0.0.0", reload=True)
 
 if __name__ == "__main__":
     main()
