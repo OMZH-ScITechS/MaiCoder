@@ -21,7 +21,7 @@ async function getData(data) {
 
 async function go() {
     let data = {
-        compiler: document.querySelector("select.compiler").value,
+        compiler: document.querySelector("select.compiler").value.split(",")[1],
         code: editor.getValue(),
         stdin: document.querySelector("textarea.input").value
     }
@@ -42,7 +42,7 @@ async function go() {
 }
 
 function compiler_change() {
-    let compiler = document.querySelector("select.compiler").value
+    let compiler = document.querySelector("select.compiler").value.split(",")[0]
     editor.session.setMode(`ace/mode/${compiler}`);
 }
 
