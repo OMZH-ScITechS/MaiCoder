@@ -5,7 +5,8 @@ h1 {
 
 main {
     margin: auto;
-    max-width: 800px;
+    width: 100%;
+    max-width: 900px;
     padding: 40px;
     background-color: #ffffff;
     display: flex;
@@ -13,6 +14,8 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 label {
