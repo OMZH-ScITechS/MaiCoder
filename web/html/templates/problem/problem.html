@@ -52,7 +52,7 @@
             const data = await fetch("https://api.maicoder.f5.si/quiz/testa")
             preview(data)
         }
-        function preview() {
+        function preview(data) {
             document.getElementById('content').innerHTML = marked.parse(data);
         }
         get_problem()
