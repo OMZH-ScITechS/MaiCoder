@@ -58,12 +58,12 @@ async def root(request: Request):
 
     return {"message": result, "speed": time.time()-ut}
 
-@app.post("/problems/{subpath:path}")
+@app.get("/problems/{subpath:path}")
 async def get_problems(subpath: str):
     try:
         with open(f"/app/problems/{subpath}/problem.md", "r") as file:
             content = file.read()
-        return {"content": content}
+        return content
     except FileNotFoundError:
         return {"error": "File not found"}, 404
     except Exception as e:
