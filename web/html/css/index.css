@@ -1,0 +1,9 @@
+section.top {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 200px;
+}
