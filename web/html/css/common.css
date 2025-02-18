@@ -110,3 +110,7 @@ th {
 ul {
     list-style: disc;
 }
+
+textarea.code {
+    font-family: monospace;
+}

@@ -15,7 +15,7 @@
 <body>
     <template>
         <tr>
-            <th>1</th>
+            <th></th>
             <td>
                 <textarea></textarea>
             </td>
@@ -23,7 +23,7 @@
                 <textarea></textarea>
             </td>
             <td>
-                <button>削除</button>
+                <button onclick="remove_test_case(this)">削除</button>
             </td>
         </tr>
     </template>
@@ -47,20 +47,20 @@
             <table>
                 <tbody>
                     <tr>
-                        <th></th>
+                        <td></td>
                         <td>入力</td>
                         <td>出力</td>
                     </tr>
                     <tr>
-                        <th>1</th>
+                        <th></th>
                         <td>
-                            <textarea></textarea>
+                            <textarea class="code"></textarea>
                         </td>
                         <td>
-                            <textarea></textarea>
+                            <textarea class="code"></textarea>
                         </td>
                         <td>
-                            <button>削除</button>
+                            <button onclick="remove_test_case(this)">削除</button>
                         </td>
                     </tr>
                 </tbody>
@@ -75,9 +75,14 @@
 
         document.querySelector(".ace_text-input").addEventListener('keyup', preview)
 
+
         function add_test_case() {
             const row = document.querySelector("template").content.cloneNode(true)
             document.querySelector("tbody").appendChild(row)
+        }
+
+        function remove_test_case(element){
+            element.closest("tr").remove()
         }
 
         function preview() {
