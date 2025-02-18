@@ -103,6 +103,7 @@ button.primary:active {
 #content {
     width: 100%;
     line-height: 1.5;
+    position: relative;
 }
 
 pre:has(code) {
@@ -137,4 +138,21 @@ table th:before {
 
 #content h1 {
     margin-top: 30px;
+}
+
+pre {
+    position: relative;
+}
+
+button.copy {
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    transform: translate(-5px,5px);
+    padding: 4px 6px;
+    background-color: #fff;
+}
+
+button.copy:active{
+    background-color: #eee;
 }
