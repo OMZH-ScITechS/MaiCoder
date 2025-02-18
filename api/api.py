@@ -60,7 +60,7 @@ async def root(request: Request):
 @app.post("/problems/{subpath:path}")
 async def get_problems(subpath: str):
     try:
-        with open(f"problems/{subpath}/problem.md", "r") as file:
+        with open(f"/app/problems/{subpath}/problem.md", "r") as file:
             content = file.read()
         return {"content": content}
     except FileNotFoundError:
