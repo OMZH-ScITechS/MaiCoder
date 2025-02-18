@@ -1,0 +1,13 @@
+kind: Contest
+metadata:
+  name: 'mwc001'
+  type: 'mwc'
+  date: '2025-02-24T20:00:00' #開始される日時
+spec:
+  problems:
+    - id: 'quiz_id'
+      level: easy  #easy,normal,hardの3段階から設定
+    - id: 'quiz_id'
+      level: easy
+    - id: 'quiz_id'
+      level: normal
