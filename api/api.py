@@ -63,7 +63,7 @@ async def get_problems(subpath: str):
     try:
         with open(f"/app/problems/{subpath}/problem.md", "r") as file:
             content = file.read()
-        return content
+        return {"content": content}
     except FileNotFoundError:
         return {"error": "File not found"}, 404
     except Exception as e:
