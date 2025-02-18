@@ -49,8 +49,10 @@
     <script src="../../js/submit.js"></script>
     <script>
         async function get_problem() {
-            const data = await fetch("https://api.maicoder.f5.si/problems/testa")
-            console.log(data)
+            const response = await fetch("https://api.maicoder.f5.si/problems/testa")
+            const json = await response.json()
+
+            preview(json.content.split('\\n').join('\n'))
         }
         function preview(data) {
             document.getElementById('content').innerHTML = marked.parse(data);
