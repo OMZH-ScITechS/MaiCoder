@@ -14,6 +14,26 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+async def fetch_html_content() -> str:
+    try:
+        response = requests.get('https://maicoder.f5.si/templates/problem/problem.html')
+        response.raise_for_status()
+        response.encoding = response.apparent_encoding  # Ensure correct encoding
+        return response.text
+    except requests.HTTPError:
+        return "<h1>Failed to fetch content</h1>"
+
+@app.get("/contest/{subpath:path}", response_class=HTMLResponse)
+async def get_contest_page(subpath: str):
+    content = await fetch_html_content()
+    return HTMLResponse(content=content)
+
+@app.get("/quiz/{subpath:path}", response_class=HTMLResponse)
+async def get_quiz_page(subpath: str):
+    content = await fetch_html_content()
+    return HTMLResponse(content=content)
+
+
 @app.post("/judge/test")
 async def root(request: Request):
     ut = float(time.time())
@@ -36,3 +56,14 @@ async def root(request: Request):
         result = 'Error'
 
     return {"message": result, "speed": time.time()-ut}
+
+@app.post("/problems/{subpath:path}")
+async def get_problems(subpath: str):
+    try:
+        with open(f"problems/{subpath}/problem.md", "r") as file:
+            content = file.read()
+        return {"content": content}
+    except FileNotFoundError:
+        return {"error": "File not found"}, 404
+    except Exception as e:
+        return {"error": str(e)}, 500
