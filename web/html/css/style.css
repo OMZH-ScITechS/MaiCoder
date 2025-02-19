@@ -57,7 +57,7 @@ button.primary {
     color: #fff;
 }
 
-textarea {
+textarea,input[type="text"] {
     padding: 8px 16px;
     border: 1px #ccc solid;
     border-radius: 4px;
@@ -114,18 +114,24 @@ pre:has(code) {
 .test_case-container {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: baseline;
     gap: 20px;
+    width: 100%;
 }
 
 .test_case-container textarea {
     min-height: 60px;
-    width: 300px;
+    width: 100%;
     resize: vertical;
 }
 
 .test_case-container table {
     counter-reset: rowCount;
+    width: 100%;
+}
+
+.test_case-container button {
+    white-space: nowrap;
 }
 
 table th {

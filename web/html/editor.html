@@ -37,13 +37,20 @@
         <h1>作問エディタ</h1>
         <p>問題を作成できます</p>
     </div>
-    <main>
+    <main style="align-items: baseline;">
+        <section>
+            <label>
+                問題タイトル:
+                <input type="text">
+            </label>
+        </section>
         <section class="editor-container">
+            <label for="">エディタ(markdown):</label>
             <div id="editor" onkeyup="preview()"></div>
             <div id="content"></div>
         </section>
-        <h1>テストケース</h1>
         <section class="test_case-container">
+            <label for="">テストケース:</label>
             <table>
                 <tbody>
                     <tr>
@@ -65,8 +72,9 @@
                     </tr>
                 </tbody>
             </table>
-            <button onclick="add_test_case()" class="primary">テストケースを追加</button>
+            <button onclick="add_test_case()">テストケースを追加</button>
         </section>
+        <button class="primary">送信</button>
     </main>
     <script>
         const editor = ace.edit("editor", {
