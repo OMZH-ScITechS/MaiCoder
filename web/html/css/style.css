@@ -156,3 +156,9 @@ button.copy {
 button.copy:active{
     background-color: #eee;
 }
+
+.action {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
