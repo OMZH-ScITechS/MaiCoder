@@ -17,10 +17,10 @@
         <tr>
             <th></th>
             <td>
-                <textarea></textarea>
+                <textarea class="code in"></textarea>
             </td>
             <td>
-                <textarea></textarea>
+                <textarea class="code out"></textarea>
             </td>
             <td>
                 <button onclick="remove_test_case(this)">削除</button>
@@ -41,14 +41,22 @@
     </div>
     <main style="align-items: baseline;">
         <section>
-            <label>
-                問題タイトル:
-                <input type="text">
-            </label>
+            <p><label>問題タイトル:</label></p>
+            <input type="text" style="max-width: 420px; width: 100%;" class="problem-title">
+        </section>
+        <section>
+            <p> <label>難易度:</label></p>
+            <select class="difficulty">
+                <option value="easy">Easy</option>
+                <option value="normal">Normal</option>
+                <option value="hard">Hard</option>
+                <option value="insine">Insane</option>
+            </select>
         </section>
         <section class="editor-container">
-            <label for="">エディタ(markdown):</label>
+            <p> <label>エディタ(markdown):</label></p>
             <div id="editor" onkeyup="preview()"></div>
+            <p> <label>プレビュー:</label></p>
             <div id="content"></div>
         </section>
         <section class="test_case-container">
@@ -63,10 +71,10 @@
                     <tr>
                         <th></th>
                         <td>
-                            <textarea class="code"></textarea>
+                            <textarea class="code in"></textarea>
                         </td>
                         <td>
-                            <textarea class="code"></textarea>
+                            <textarea class="code out"></textarea>
                         </td>
                         <td>
                             <button onclick="remove_test_case(this)">削除</button>
@@ -76,7 +84,7 @@
             </table>
             <button onclick="add_test_case()">テストケースを追加</button>
         </section>
-        <button class="primary">送信</button>
+        <button class="primary" onclick="post()">送信</button>
     </main>
     <script>
         const editor = ace.edit("editor", {
@@ -90,14 +98,24 @@
             document.querySelector("tbody").appendChild(row)
         }
 
-        function remove_test_case(element){
+        function remove_test_case(element) {
             element.closest("tr").remove()
         }
 
         function preview() {
             document.getElementById('content').innerHTML = marked.parse((editor.getValue()));
         }
-    
+
+        function post() {
+            let tests = []
+            console.log({
+                name: document.querySelector("input.problem-title").value,
+                difficulty: document.querySelector("select.difficulty").value,
+                content: editor.getValue(),
+                tests: tests
+            })
+
+        }
     </script>
 </body>
 

@@ -201,3 +201,7 @@ img.badge {
     gap: 4px;
     align-items: center;
 }
+
+main section {
+    width: 100%;
+}
