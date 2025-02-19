@@ -29,7 +29,7 @@ async def get_contest_page(subpath: str):
     content = await fetch_html_content()
     return HTMLResponse(content=content)
 
-@app.get("/quiz/{subpath:path}", response_class=HTMLResponse)
+@app.get("/problems/{subpath:path}", response_class=HTMLResponse)
 async def get_quiz_page(subpath: str):
     content = await fetch_html_content()
     return HTMLResponse(content=content)
