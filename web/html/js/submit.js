@@ -46,4 +46,8 @@ function compiler_change() {
     editor.session.setMode(`ace/mode/${compiler}`);
 }
 
+function badge(state){
+    return `<div class="badge ${state}"></div>`
+}
+
 compiler_change()

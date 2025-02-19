@@ -168,3 +168,36 @@ button.copy:active{
     gap: 8px;
     align-items: center;
 }
+
+img.badge {
+    width: 50px;
+}
+
+.badge {
+    width: 46px;
+    height: 24px;
+    background-size: 100%;
+    display: inline-block;
+}
+
+.badge.ac {
+    background-image: url(../img/ac.svg);
+}
+
+.badge.tle {
+    background-image: url(../img/tle.svg);
+}
+
+.badge.ce {
+    background-image: url(../img/ce.svg);
+}
+
+.badge.wa {
+    background-image: url(../img/wa.svg);
+}
+
+.test-result {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
