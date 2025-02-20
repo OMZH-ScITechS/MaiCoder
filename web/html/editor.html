@@ -108,13 +108,24 @@
 
         function post() {
             let tests = []
-            console.log({
+            document.querySelectorAll(".test_case-container td textarea.code").forEach((element, index) => {
+                if (index % 2 == 0) {
+                    tests.push({
+                        input: "",
+                        output: ""
+                    })
+                    tests[tests.length - 1].input = element.value
+                } else {
+                    tests[tests.length - 1].output = element.value
+                }
+            })
+
+            let data = {
                 name: document.querySelector("input.problem-title").value,
                 difficulty: document.querySelector("select.difficulty").value,
                 content: editor.getValue(),
                 tests: tests
-            })
-
+            }
         }
     </script>
 </body>
