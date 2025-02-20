@@ -7,7 +7,7 @@ import json
 import time
 import os  # Add this import
 
-problems_dir = "/app/problems/"
+problems_dir = "/app/data/problems/"
 
 app = FastAPI()
 app.add_middleware(
