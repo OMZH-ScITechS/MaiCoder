@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -22,8 +22,8 @@
             <td>
                 <textarea class="code out"></textarea>
             </td>
-            <td>
-                <button onclick="remove_test_case(this)">削除</button>
+            <td class="remove">
+                <button onclick="remove_test_case(this)" class="caution">削除</button>
             </td>
         </tr>
     </template>
@@ -61,28 +61,30 @@
         </section>
         <section class="test_case-container">
             <label for="">テストケース:</label>
-            <table>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>入力</td>
-                        <td>出力</td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td>
-                            <textarea class="code in"></textarea>
-                        </td>
-                        <td>
-                            <textarea class="code out"></textarea>
-                        </td>
-                        <td>
-                            <button onclick="remove_test_case(this)">削除</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="add_test_case()">テストケースを追加</button>
+            <div class="wrapper">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>入力</td>
+                            <td>出力</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <textarea class="code in"></textarea>
+                            </td>
+                            <td>
+                                <textarea class="code out"></textarea>
+                            </td>
+                            <td class="remove">
+                                <button onclick="remove_test_case(this)" class="caution">削除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="add_test_case()">テストケースを追加</button>
+            </div>
         </section>
         <button class="primary" onclick="post()">送信</button>
     </main>
@@ -92,7 +94,7 @@
         })
         editor.session.setMode("ace/mode/markdown");
         let default_content = "# 問題文\n# 制約\n# 入力\n# 出力\n# 入力例1\n# 出力例1"
-        
+
         editor.setValue(default_content);
 
         document.querySelector(".ace_text-input").addEventListener('keyup', preview)
@@ -110,7 +112,7 @@
             document.getElementById('content').innerHTML = marked.parse((editor.getValue()));
         }
 
-        function post() {
+        async function post() {
             let tests = []
             document.querySelectorAll(".test_case-container td textarea.code").forEach((element, index) => {
                 if (index % 2 == 0) {
@@ -130,7 +132,24 @@
                 content: editor.getValue(),
                 tests: tests
             }
-            console.log(data)
+            console.log(await post_problem(data))
+        }
+
+        async function post_problem(data) {
+            const url = "https://api.maicoder.f5.si/problems/post";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                });
+                if (!response.ok) {
+                    throw new Error(`レスポンスステータス: ${response.status}`);
+                }
+                const json = await response.json();
+                return json
+            } catch (error) {
+                return error
+            }
         }
     </script>
 </body>
