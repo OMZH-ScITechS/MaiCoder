@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-$async def fetch_html_content() -> str:
+async def fetch_html_content() -> str:
     try:
         response = requests.get('https://maicoder.f5.si/templates/problem/problem.html')
         response.raise_for_status()
