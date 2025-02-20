@@ -1,11 +1,10 @@
-name: WEB CI
+name: WEB TEMPLATE CI
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'web/**'
-      - '!web/template/**'
+      - 'web/template/**'
 
 jobs:
   main:
@@ -39,4 +38,4 @@ jobs:
         context: web
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/omzh-scitechs/maicoder:web
+        tags: ghcr.io/omzh-scitechs/maicoder:web-template
