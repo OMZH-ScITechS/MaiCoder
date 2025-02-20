@@ -90,6 +90,10 @@
         const editor = ace.edit("editor", {
             fontSize: "15px"
         })
+        editor.session.setMode("ace/mode/markdown");
+        let default_content = "# 問題文\n# 制約\n# 入力\n# 出力\n# 入力例1\n# 出力例1"
+        
+        editor.setValue(default_content);
 
         document.querySelector(".ace_text-input").addEventListener('keyup', preview)
 
@@ -126,6 +130,7 @@
                 content: editor.getValue(),
                 tests: tests
             }
+            console.log(data)
         }
     </script>
 </body>
