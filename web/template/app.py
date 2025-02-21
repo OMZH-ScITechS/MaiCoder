@@ -22,7 +22,7 @@ async def fetch_html_content() -> str:
     except requests.HTTPError:
         return "<h1>Failed to fetch content</h1>"
 
-@app.get("/contest/{subpath:path}", response_class=HTMLResponse)
+@app.get("/contests/{subpath:path}", response_class=HTMLResponse)
 async def get_contest_page(subpath: str):
     content = await fetch_html_content()
     return HTMLResponse(content=content)
