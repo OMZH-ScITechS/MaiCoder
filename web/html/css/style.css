@@ -36,6 +36,7 @@ button {
     align-items: center;
     gap: 7px;
     background-color: #fff;
+    white-space: nowrap;
 }
 
 button span,
@@ -62,10 +63,11 @@ button.caution {
     color: #d70000;
 }
 
-textarea,input[type="text"] {
+textarea,input[type="text"],input[type="number"],input[type="datetime-local"] {
     padding: 8px 16px;
     border: 1px #ccc solid;
     border-radius: 4px;
+    background-color: #fff;
 }
 
 textarea.monospace {
@@ -123,7 +125,7 @@ pre:has(code) {
     width: 100%;
 }
 
-.test_case-container .wrapper {
+.wrapper {
     background-color: #f4f4f4;
     border: 1px solid #ddd;
     padding: 15px;
@@ -143,7 +145,7 @@ pre:has(code) {
     background-color: #fff;
 }
 
-.test_case-container table {
+table {
     counter-reset: rowCount;
     text-align: center;
     width: 100%;
@@ -159,6 +161,14 @@ table th {
 
 table th:before {
     content: counter(rowCount);
+}
+
+table th.alphabet:before {
+    content: counter(rowCount,upper-alpha);
+}
+
+table input {
+    text-align: left;
 }
 
 #content h1 {
@@ -227,4 +237,16 @@ main section {
 
 td.remove {
     width: 0;
+}
+
+td.name {
+    width: 100%;
+}
+
+td.score input{
+    width: 100px;
+}
+
+td.name {
+    text-align: left;
 }
