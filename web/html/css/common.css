@@ -115,3 +115,9 @@ textarea.code {
     font-family: monospace;
 }
 
+
+
+input[type="checkbox"]{
+    transform: scale(1.4);
+    transform-origin: center left;
+}
