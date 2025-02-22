@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテスト</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        main {
+            display: none;
+        }
+
+        main.active {
+            display: inherit;
+        }
+
+        td.result {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <template>
+        <button class="copy" onclick="copy(this)">copy</button>
+    </template>
+    <header>
+        <a href="./">
+            <img src="../../img/logo.svg" alt="MaiCoder">
+        </a>
+        <div>
+            <a href="../../code-test.html">コードテスト</a>
+        </div>
+    </header>
+    <div class="title">
+        <h1>コンテスト名</h1>
+        <p>開始日時</p>
+    </div>
+    <nav>
+        <button class="active" onclick="new nav(this).top()" value="top">トップ</button>
+        <button onclick="new nav(this).ranking()" value="ranking">順位表</button>
+        <button onclick="new nav(this).submittion()" value="submittion">自分の提出</button>
+    </nav>
+    <main style="align-items: baseline;" class="top active">
+        <section>
+            <h1>コンテスト概要</h1>
+            <div id="content">
+                ###
+            </div>
+        </section>
+        <table class="border">
+            <tr>
+                <td></td>
+                <td>問題名</td>
+                <td>得点</td>
+            </tr>
+            <tr>
+                <th class="alphabet"></th>
+                <td class="name">
+                    <a href="">問題めい</a>
+                </td>
+                <td class="score">
+                    <p>100</p>
+                </td>
+            </tr>
+            <tr>
+                <th class="alphabet"></th>
+                <td class="name">
+                    <a href="">問題めい</a>
+                </td>
+                <td class="score">
+                    <p>200</p>
+                </td>
+            </tr>
+        </table>
+    </main>
+    <main style="align-items: baseline;" class="ranking">
+        <h1>順位</h1>
+        <section>
+            <table class="border">
+                <tr>
+                    <td>順位</td>
+                    <td>ユーザー</td>
+                    <td>得点</td>
+                    <td>ミス</td>
+                    <td>時間</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td class="name">
+                        <a href="">問題めい</a>
+                    </td>
+                    <td class="score">
+                        100
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td class="time">
+                        10:00
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <main style="align-items: baseline;" class="submittion">
+        <h1>自分の提出</h1>
+        <section>
+            <table class="border">
+                <tr>
+                    <td>提出時間</td>
+                    <td>問題</td>
+                    <td>得点</td>
+                    <td>実行時間</td>
+                    <td>結果</td>
+                </tr>
+                <tr>
+                    <td>
+                        15:20
+                    </td>
+                    <td class="name">
+                        問題めい
+                    </td>
+                    <td>
+                        520
+                    </td>
+                    <td class="time">
+                        100ms
+                    </td>
+                    <td class="result"></td>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <script src="../../js/submit.js"></script>
+    <script>
+        class nav {
+            constructor(element) {
+                document.querySelector("button.active").classList.remove("active")
+                document.querySelector("main.active").classList.remove("active")
+                this.element = element
+                this.element.classList.add("active")
+                document.querySelector(`main.${this.element.value}`).classList.add("active")
+            }
+            top() {
+
+            }
+            ranking() {
+
+            }
+            submittion() {
+
+            }
+        }
+
+        document.querySelector(".result").innerHTML = badge("ac")
+
+        /////////////////
+
+
+    </script>
+</body>
+
+</html>

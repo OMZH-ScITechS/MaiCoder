@@ -3,6 +3,10 @@ h1 {
     font-weight: 600;
 }
 
+header {
+    position: sticky;
+}
+
 main {
     margin: auto;
     width: 100%;
@@ -63,7 +67,10 @@ button.caution {
     color: #d70000;
 }
 
-textarea,input[type="text"],input[type="number"],input[type="datetime-local"] {
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"] {
     padding: 8px 16px;
     border: 1px #ccc solid;
     border-radius: 4px;
@@ -157,14 +164,16 @@ table {
 
 table th {
     counter-increment: rowCount;
+    text-align: center;
 }
 
 table th:before {
     content: counter(rowCount);
+    text-align: center;
 }
 
 table th.alphabet:before {
-    content: counter(rowCount,upper-alpha);
+    content: counter(rowCount, upper-alpha);
 }
 
 table input {
@@ -183,12 +192,12 @@ button.copy {
     position: absolute;
     z-index: 100;
     right: 0;
-    transform: translate(-5px,5px);
+    transform: translate(-5px, 5px);
     padding: 4px 6px;
     background-color: #fff;
 }
 
-button.copy:active{
+button.copy:active {
     background-color: #eee;
 }
 
@@ -243,10 +252,34 @@ td.name {
     width: 100%;
 }
 
-td.score input{
+td.score input {
     width: 100px;
 }
 
 td.name {
     text-align: left;
 }
+
+nav {
+    display: flex;
+    padding: 10px;
+}
+
+nav button {
+    background: none;
+    border: none;
+}
+
+nav button.active {
+    background-color: #2476ea;
+    color: #fff;
+}
+
+table.border td {
+    white-space: nowrap;
+    padding: 12px 16px;
+}
+
+table.border, table.border th, table.border td {
+    border:1px solid #ddd;
+  }
