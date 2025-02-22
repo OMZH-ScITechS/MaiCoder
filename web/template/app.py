@@ -13,9 +13,9 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-async def fetch_html_content() -> str:
+async def fetch_html_content(url: str) -> str:
     try:
-        response = requests.get('https://maicoder.f5.si/templates/problem/problem.html')
+        response = requests.get(url)
         response.raise_for_status()
         response.encoding = response.apparent_encoding
         return response.text
@@ -24,10 +24,10 @@ async def fetch_html_content() -> str:
 
 @app.get("/contests/{subpath:path}", response_class=HTMLResponse)
 async def get_contest_page(subpath: str):
-    content = await fetch_html_content()
+    content = await fetch_html_content('https://maicoder.f5.si/templates/contest/contest.html')
     return HTMLResponse(content=content)
 
 @app.get("/problems/{subpath:path}", response_class=HTMLResponse)
 async def get_quiz_page(subpath: str):
-    content = await fetch_html_content()
+    content = await fetch_html_content('https://maicoder.f5.si/templates/problem/problem.html')
     return HTMLResponse(content=content)
