@@ -12,7 +12,7 @@ app.add_middleware(
 )
 
 # Import the routers from the new files
-from .endpoints import judge, problems
+from api.endpoints import judge, problems
 
 # Include the routers
 app.include_router(judge.router, prefix="/judge")
