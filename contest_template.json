@@ -2,18 +2,18 @@
   "name": "MWC001",
   "type": "mwc",
   "date": "2025-02-20T20:00:00",
-  "content": "This is a contest(Markdownを入れるようにする)",
+  "content": "このコンテストは3つの問題で構成されています。\n\n1. **問題 1** - easy (100 点)\n2. **問題 2** - normal (200 点)\n3. **問題 3** - hard (300 点)",
   "problems": [
     {
-      "id": "quiz_id",
+      "id": "00001",
       "score": 100
     },
     {
-      "id": "quiz_id",
+      "id": "00002",
       "score": 200
     },
     {
-      "id": "quiz_id",
+      "id": "00003",
       "score": 300
     }
   ]
