@@ -26,8 +26,14 @@
 </head>
 
 <body>
-    <template>
-        <button class="copy" onclick="copy(this)">copy</button>
+    <template class="problem">
+        <tr>
+            <th class="alphabet"></th>
+            <td class="name">
+                <a href="">問題めい</a>
+            </td>
+            <td class="score"></td>
+        </tr>
     </template>
     <header>
         <a href="./">
@@ -49,33 +55,13 @@
     <main style="align-items: baseline;" class="top active">
         <section>
             <h1>コンテスト概要</h1>
-            <div id="content">
-                ###
-            </div>
+            <div id="content"></div>
         </section>
         <table class="border">
             <tr>
                 <td></td>
                 <td>問題名</td>
                 <td>得点</td>
-            </tr>
-            <tr>
-                <th class="alphabet"></th>
-                <td class="name">
-                    <a href="">問題めい</a>
-                </td>
-                <td class="score">
-                    <p>100</p>
-                </td>
-            </tr>
-            <tr>
-                <th class="alphabet"></th>
-                <td class="name">
-                    <a href="">問題めい</a>
-                </td>
-                <td class="score">
-                    <p>200</p>
-                </td>
             </tr>
         </table>
     </main>
@@ -150,15 +136,34 @@
         }
 
         async function get_contest() {
+            // 開発用 const response = await fetch("https://api.maicoder.f5.si/contests/mwc001")
             const response = await fetch("https://api.maicoder.f5.si/contests/" + location.pathname.split('/')[2])
             const json = await response.json()
+
+            set_description(json.content)
             set_title(json.name, json.date)
+            set_problems(json.problems)
         }
 
         function set_title(name, date) {
             const formattedDate = format_date(date);
             document.querySelector(".title h1").innerText = name
             document.querySelector(".title p").innerText += ' ' + formattedDate
+        }
+
+        function set_description(content) {
+            document.querySelector("#content").innerHTML = marked.parse(content)
+        }
+
+        function set_problems(problems) {
+            problems.forEach(async element => {
+                let row = document.querySelector("template.problem").content.cloneNode(true)
+                let problem = await get_problem(element.id)
+                row.querySelector("tr td.name a").innerText = problem.name
+                row.querySelector("tr td.name a").href = "https://maicoder.f5.si/problems/" + element.id
+                row.querySelector("tr td.score").innerText = element.score
+                document.querySelector("main.top table").appendChild(row)
+            })
         }
 
         class nav {
@@ -183,7 +188,7 @@
         document.querySelector(".result").innerHTML = badge("ac")
 
         /////////////////
-
+        get_contest()
     </script>
 </body>
 

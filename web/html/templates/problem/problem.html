@@ -64,15 +64,16 @@
             input: [],
             output: []
         }
-        async function get_problem() {
-            const response = await fetch("https://api.maicoder.f5.si/problems/" + location.pathname.split('/')[2])
-            const json = await response.json()
-            preview(json.content.split('\\n').join('\n'))
-            set_title(json.name)
-        }
+
 
         function set_title(name) {
             document.querySelector(".title h1").innerText = name
+        }
+
+        async function set_problem() {
+            const json = await get_problem(location.pathname.split('/')[2])
+            await preview(json.content.split('\\n').join('\n'))
+            await set_title(json.name)
         }
 
         function preview(data) {
@@ -124,7 +125,7 @@
                 element.closest("pre").before(document.querySelector("template").content.cloneNode(true))
             })
         }
-        get_problem()
+        set_problem()
     </script>
 </body>
 
