@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request
 import os
 import json
+from datetime import datetime
 
 router = APIRouter()
 problems_dir = "/app/data/problems/"
@@ -23,6 +24,10 @@ async def get_problems(subpath: str):
 async def post_problem(request: Request):
     try:
         data = await request.json()
+        
+        problem_date = datetime.fromisoformat(data.get("date"))
+        if problem_date > datetime.now():
+            return {"error": "This problem has not been published"}, 400
 
         existing_files = [f for f in os.listdir(problems_dir) if f.endswith(".json")]
         problem_id = str(len(existing_files) + 1).zfill(5)
