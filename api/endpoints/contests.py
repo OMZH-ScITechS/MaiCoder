@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
-import requests
+import os
+import json
 
 router = APIRouter()
 problems_dir = "/app/data/contests/"
 
-@router.get("/{subpath:path}", response_class=HTMLResponse)
-async def get_contest_page(subpath: str):
+@router.get("/{subpath:path}")
+async def get_contest_datail(subpath: str):
     try:
-        response = requests.get('https://maicoder.f5.si/templates/contest/contest.html')
-        response.raise_for_status()
-        response.encoding = response.apparent_encoding
-        content = response.text
-    except requests.HTTPError:
-        content = "<h1>Failed to fetch content</h1>"
-    return HTMLResponse(content=content)
+        with open(f"{problems_dir}{subpath}.json", "r") as file:
+            content = json.load(file)
+        return content
+    except FileNotFoundError:
+        return {"error": "File not found"}, 404
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON format"}, 400
+    except Exception as e:
+        return {"error": str(e)}, 500

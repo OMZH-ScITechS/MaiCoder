@@ -1,0 +1,19 @@
+{
+  "name": "mwc001",
+  "type": "mwc",
+  "date": "2025-02-24T20:00:00",
+  "problems": [
+    {
+      "id": "quiz_id",
+      "level": "easy"
+    },
+    {
+      "id": "quiz_id",
+      "level": "easy"
+    },
+    {
+      "id": "quiz_id",
+      "level": "normal"
+    }
+  ]
+}
