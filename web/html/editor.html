@@ -89,6 +89,11 @@
         <section>
             <label>今すぐ公開:</label>
             <input type="checkbox" name="" id="" checked>
+
+            <!-- 今すぐ公開しないときだけ表示するようにする/現在時刻より前は設定できないようにする -->
+            <!-- コンテストとの紐づけはここではしない -->
+            <p><label>公開日時:</label></p>
+            <input type="datetime-local" class="">
         </section>
         <button class="primary" onclick="post()">送信</button>
     </main>

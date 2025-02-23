@@ -1,8 +1,8 @@
 {
-  "name": "mwc001",
+  "name": "MWC001",
   "type": "mwc",
-  "date": "2025-02-24T20:00:00",
-  "content": "This is a contest",
+  "date": "2025-02-20T20:00:00",
+  "content": "This is a contest(Markdownを入れるようにする)",
   "problems": [
     {
       "id": "quiz_id",
