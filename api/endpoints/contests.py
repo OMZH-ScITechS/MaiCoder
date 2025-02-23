@@ -12,7 +12,7 @@ async def get_contest_datail(subpath: str):
         with open(f"{problems_dir}{subpath}.json", "r") as file:
             content = json.load(file)
             contest_date = datetime.fromisoformat(content.get("date"))
-            if contest_date < datetime.now():
+            if contest_date > datetime.now():
                 del content["problems"]
         return content
     except FileNotFoundError:
