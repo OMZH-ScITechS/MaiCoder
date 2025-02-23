@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテスト</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="/">
+            <img src="../../img/logo.svg" alt="MaiCoder">
+        </a>
+        <div>
+            <a href="../../code-test.html">コードテスト</a>
+        </div>
+    </header>
+    <div class="panel">
+        <h1>ログイン</h1>
+        <form>
+            <section>
+                <label>ユーザー名:</label>
+                <input type="text" class="user" required>
+            </section>
+            <section>
+                <label>パスワード:</label>
+                <input type="password" class="password" required minlength="6">
+                <p class="caption">6文字以上 半角英文字・数字を含む</p>
+            </section>
+            <button class="primary" type="button" onclick="login()">ログイン</button>
+        </form>
+    </div>
+    <script>
+        function login() {
+            let user_data = {
+                user: document.querySelector("input.user").value,
+                password: document.querySelector("input.password").value
+            }
+        }
+    </script>
+</body>
+
+</html>
