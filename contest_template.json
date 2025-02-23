@@ -2,18 +2,19 @@
   "name": "mwc001",
   "type": "mwc",
   "date": "2025-02-24T20:00:00",
+  "content": "This is a contest",
   "problems": [
     {
       "id": "quiz_id",
-      "level": "easy"
+      "score": 100
     },
     {
       "id": "quiz_id",
-      "level": "easy"
+      "score": 200
     },
     {
       "id": "quiz_id",
-      "level": "normal"
+      "score": 300
     }
   ]
 }
