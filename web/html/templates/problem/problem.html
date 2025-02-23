@@ -104,7 +104,7 @@
                     stdin: data_in
                 }
                 let case_name = "例" + (index + 1)
-                let test = await getData(data)
+                let test = await get_judge(data)
                 if (test.message.status == 1) {
                     message.push(case_name + ":" + badge('ce'))
                 } else if (test.message.program_message == data_out) {

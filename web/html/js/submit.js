@@ -4,7 +4,7 @@ if (document.querySelector("#editor")!=undefined) {
     })
 }
 
-async function getData(data) {
+async function get_judge(data) {
     const url = "https://api.maicoder.f5.si/judge/test";
     try {
         const response = await fetch(url, {
@@ -39,7 +39,7 @@ async function go() {
     let $button = document.querySelector("button.go")
     $button.classList.add("loading")
 
-    const response = await getData(data)
+    const response = await get_judge(data)
 
     let $output = document.querySelector(".output code")
     let $speed = document.querySelector("span.speed")
