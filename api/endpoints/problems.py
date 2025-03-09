@@ -4,6 +4,7 @@ import json
 
 router = APIRouter()
 problems_dir = "/app/data/problems/"
+submit_dir = "/app/data/submissions/"
 
 @router.get("/{subpath:path}")
 async def get_problems(subpath: str):
@@ -12,6 +13,28 @@ async def get_problems(subpath: str):
             content = json.load(file)
             del content["tests"]
         return content
+    except FileNotFoundError:
+        return {"error": "File not found"}, 404
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON format"}, 400
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+@router.post("/{subpath:path}/submit")
+async def submit_problem(subpath: str, request: Request):
+    try:
+        data = await request.json()
+
+        existing_files = [f for f in os.listdir(submit_dir+subpath) if f.endswith(".json")]
+        submit_id = str(len(existing_files) + 1).zfill(5)
+        
+        with open(f"{submit_dir}{subpath}/{submit_id}.json", "w") as file:
+            json.dump(data, file)
+        
+        # Process the submission (this is a placeholder, implement your logic here)
+        result = {"status": "success", "submit_id": submit_id}
+        
+        return result
     except FileNotFoundError:
         return {"error": "File not found"}, 404
     except json.JSONDecodeError:
