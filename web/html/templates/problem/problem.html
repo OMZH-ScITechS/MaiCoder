@@ -127,7 +127,7 @@
         }
 
         async function get_submit(data) {
-            const url = `https://api.maicoder.f5.si/problems/00003/submit/`;
+            const url = `https://api.maicoder.f5.si/submit/${location.pathname.split('/')[2]}`;
             try {
                 const response = await fetch(url, {
                     method: "POST",
