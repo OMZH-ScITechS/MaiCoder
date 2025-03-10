@@ -1,5 +1,6 @@
+let editor;
 if (document.querySelector("#editor")!=undefined) {
-    const editor = ace.edit("editor", {
+    editor = ace.edit("editor", {
         fontSize: "15px"
     })
 }
