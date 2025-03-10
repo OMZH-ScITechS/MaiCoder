@@ -20,7 +20,7 @@ async def get_problems(subpath: str):
     except Exception as e:
         return {"error": str(e)}, 500
 
-@router.post("/{subpath:path}/submit")
+@router.post("/submit/{subpath:path}")
 async def submit_problem(subpath: str, request: Request):
     try:
         data = await request.json()
