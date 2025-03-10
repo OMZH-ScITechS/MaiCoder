@@ -46,7 +46,7 @@
                     <div id="editor"></div>
                 </label>
                 <div class="action">
-                    <button type="button" class="primary submit" onclick="go()">
+                    <button type="button" class="primary submit" onclick="submit()">
                         <p>提出</p>
                     </button>
                     <button type="button" onclick="in_judge()">
@@ -125,6 +125,33 @@
                 element.closest("pre").before(document.querySelector("template").content.cloneNode(true))
             })
         }
+
+        async function get_submit(data) {
+            const url = `https://api.maicoder.f5.si/${location.pathname.split('/')[2]}`;
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                });
+                if (!response.ok) {
+                    throw new Error(`レスポンスステータス: ${response.status}`);
+                }
+                const json = await response.json();
+                return json
+            } catch (error) {
+                return error
+            }
+        }
+
+        async function submit() {
+            let data = {
+                compiler: document.querySelector("select.compiler").value.split(",")[1],
+                code: editor.getValue(),
+            }
+            await get_submit(data)
+            //もしsucusessが帰ってきたらリダイレクト コンテストの自分の提出に
+        }
+
         set_problem()
     </script>
 </body>
