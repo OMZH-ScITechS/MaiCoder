@@ -12,10 +12,11 @@ app.add_middleware(
 )
 
 # Import the routers from the new files
-from endpoints import judge, problems, contests, users
+from endpoints import judge, problems, contests, users, submissions
 
 # Include the routers
 app.include_router(judge.router, prefix="/judge")
 app.include_router(problems.router, prefix="/problems")
 app.include_router(contests.router, prefix="/contests")
 app.include_router(users.router, prefix="/users")
+app.include_router(submissions.router, prefix="/submissions")

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 import os
 import json
 
@@ -20,12 +20,15 @@ async def get_problems(subpath: str):
     except Exception as e:
         return {"error": str(e)}, 500
 
-@router.post("/{subpath:path}/submit")
+@router.post("/submit/{subpath:path}")
 async def submit_problem(subpath: str, request: Request):
     try:
         data = await request.json()
 
-        existing_files = [f for f in os.listdir(submit_dir+subpath) if f.endswith(".json")]
+        # Ensure the submission directory exists
+        os.makedirs(submit_dir + subpath, exist_ok=True)
+
+        existing_files = [f for f in os.listdir(submit_dir + subpath) if f.endswith(".json")]
         submit_id = str(len(existing_files) + 1).zfill(5)
         
         with open(f"{submit_dir}{subpath}/{submit_id}.json", "w") as file:
