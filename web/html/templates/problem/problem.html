@@ -10,6 +10,82 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.min.js"></script>
+    <style>
+        main {
+            flex-direction: row;
+            max-width: 100%;
+            position: fixed;
+            top: 60px;
+            height: calc(100% - 60px);
+            padding: 0;
+            gap: 0;
+            display: flex;
+        }
+
+        #content {
+            overflow: scroll;
+            padding: 20px;
+            padding-top: 0;
+        }
+
+        #content h1 {
+            font-size: 26px;
+        }
+
+        #code-test {
+            float: left;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        #problem {
+            width: 50%;
+            height: 100%;
+            overflow: scroll;
+            float: left;
+            width: 50%;
+        }
+
+        .gutter {
+            cursor: ew-resize;
+            height: 100%;
+            background-color: #dfdfdf;
+        }
+
+        form {
+            height: 100%;
+            gap: 10px;
+        }
+
+        select {
+            border: 0;
+        }
+
+        #editor {
+            flex-grow: 1;
+            height: auto;
+        }
+
+        .input {
+            height: 100px;
+        }
+
+        .output {
+            overflow: scroll;
+            height: 100px;
+        }
+
+        .code {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,37 +93,36 @@
         <button class="copy" onclick="copy(this)">copy</button>
     </template>
     <header>
-        <a href="/">
-            <img src="../../img/logo.svg" alt="MaiCoder">
-        </a>
-        <div>
-            <a href="../../code-test.html">コードテスト</a>
+        <div class="left">
+            <h1></h1>
+            <p>実行時間: 3000ms, メモリ制限: 1024MB</p>
+        </div>
+        <div class="right">
+            <button type="button" class="primary submit" onclick="problem_submit()">
+                <p>提出</p>
+            </button>
         </div>
     </header>
-    <div class="title">
-        <h1></h1>
-        <p>実行時間: 3000ms, メモリ制限: 1024MB</p>
-    </div>
     <main>
-        <div id="content"></div>
-    </main>
-    <main>
-        <div class="form-container">
+        <div id="problem">
+            <div id="content"></div>
+        </div>
+        <div class="form-container" id="code-test">
             <form>
-                <label>
-                    言語:
+                <div class="code">
                     <select class="compiler" onchange="compiler_change()">
                         <option value="python,pypy-3.7-v7.3.9">Python: pypy-3.7-v7.3.9</option>
                         <option value="c++,gcc-head">C++: gcc-head</option>
                     </select>
-                </label>
-
-                <label>
                     <div id="editor"></div>
+                </div>
+                <label>
+                    <textarea class="input monospace" placeholder="標準入力..."></textarea>
                 </label>
                 <div class="action">
-                    <button type="button" class="primary submit" onclick="problem_submit()">
-                        <p>提出</p>
+                    <button type="button" class="primary go" onclick="go()">
+                        <p>実行<span>中...</span></p>
+                        <div class="loader"></div>
                     </button>
                     <button type="button" onclick="in_judge()">
                         <p>コードテスト</p>
@@ -55,6 +130,12 @@
                     <div class="test-result"></div>
                 </div>
             </form>
+            <label>
+                <!--<p>応答時間:<span class="speed"></span></p>--->
+                <div class="output">
+                    <code></code>
+                </div>
+            </label>
         </div>
     </main>
     <script src="../../js/submit.js"></script>
@@ -65,9 +146,12 @@
             output: []
         }
 
+        Split(['#problem', '#code-test'],{
+            gutterSize: 4
+        })
 
         function set_title(name) {
-            document.querySelector(".title h1").innerText = name
+            document.querySelector("header h1").innerText = name
         }
 
         async function set_problem() {
@@ -145,7 +229,7 @@
 
         async function problem_submit() {
             let data = {
-                user:"pcsuke",
+                user: "pcsuke",
                 compiler: document.querySelector("select.compiler").value.split(",")[1],
                 code: editor.getValue(),
             }

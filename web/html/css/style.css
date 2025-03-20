@@ -109,10 +109,11 @@ button.primary:active {
 
 .output {
     padding: 8px 16px;
-    border: 1px #ccc solid;
+    border: 1px #393939 solid;
     border-radius: 4px;
-    background-color: #f4f4f4;
+    background-color: #222222;
     overflow-y: scroll;
+    color: #fff;
 }
 
 .editor-container {
