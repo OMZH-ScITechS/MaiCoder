@@ -30,7 +30,8 @@
     </div>
     <main>
         <div id="content"></div>
-        <h1>提出</h1>
+    </main>
+    <main>
         <div class="form-container">
             <form>
                 <label>
@@ -42,7 +43,6 @@
                 </label>
 
                 <label>
-                    コードテスト:
                     <div id="editor"></div>
                 </label>
                 <div class="action">
@@ -71,7 +71,7 @@
         }
 
         async function set_problem() {
-            const json = await get_problem(location.pathname.split('/')[2])
+            const json = await get_problem("00001")
             await preview(json.content.split('\\n').join('\n'))
             await set_title(json.name)
         }
