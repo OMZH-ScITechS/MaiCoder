@@ -1,10 +1,24 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Depends
+from fastapi.security import HTTPBearer
 import os
 import json
+import jwt
+from datetime import datetime
 
 router = APIRouter()
 problems_dir = "/app/data/problems/"
 submit_dir = "/app/data/submissions/"
+SECRET_KEY = os.getenv("SECRET_KEY")
+security = HTTPBearer()
+
+def get_current_user(token: str = Depends(security)):
+    try:
+        payload = jwt.decode(token.credentials, SECRET_KEY, algorithms=["HS256"])
+        return payload.get("sub")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 @router.get("/{subpath:path}")
 async def get_problems(subpath: str):
@@ -21,11 +35,14 @@ async def get_problems(subpath: str):
         return {"error": str(e)}, 500
 
 @router.post("/submit/{subpath:path}")
-async def submit_problem(subpath: str, request: Request):
+async def submit_problem(subpath: str, request: Request, current_user: str = Depends(get_current_user)):
     try:
         data = await request.json()
 
-        # Ensure the submission directory exists
+        # Add username to the submission data
+        data["submitted_by"] = current_user
+        data["submitted_at"] = datetime.utcnow().isoformat()
+
         os.makedirs(submit_dir + subpath, exist_ok=True)
 
         existing_files = [f for f in os.listdir(submit_dir + subpath) if f.endswith(".json")]
@@ -34,8 +51,7 @@ async def submit_problem(subpath: str, request: Request):
         with open(f"{submit_dir}{subpath}/{submit_id}.json", "w") as file:
             json.dump(data, file)
         
-        # Process the submission (this is a placeholder, implement your logic here)
-        result = {"status": "success", "submit_id": submit_id}
+        result = {"status": "success", "submit_id": submit_id, "submitted_by": current_user}
         
         return result
     except FileNotFoundError:
