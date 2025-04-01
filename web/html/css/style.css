@@ -10,6 +10,10 @@ header {
     border-bottom: 1px #ddd solid;
 }
 
+ul {
+    margin-left: 1.2rem;
+}
+
 main {
     margin: auto;
     width: 100%;
