@@ -39,15 +39,30 @@
                 <label>再確認パスワード:</label>
                 <input type="password" class="re-password">
             </section>
-            <button class="primary">アカウントを作成</button>
+            <button class="primary" onclick="signup()" type="button">アカウントを作成</button>
         </form>
     </div>
     <script>
-        function signup() {
-            if (document.querySelector("input.password").value == document.querySelector("input.re-password")) {
+        async function signup() {
+            if (document.querySelector("input.password").value == document.querySelector("input.re-password").value) {
                 let user_data = {
                     user: document.querySelector("input.user").value,
                     password: document.querySelector("input.password").value
+                };
+                try {
+                    let response = await fetch("https://api.maicoder.f5.si/users/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(user_data)
+                    });
+                    if (response.status == 200) {
+                        let data = await response.json();
+                        console.log(data);
+                    }
+                } catch (error) {
+                    console.error("エラーが発生しました:", error);
                 }
             }
         }
