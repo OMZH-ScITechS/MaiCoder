@@ -25,8 +25,8 @@ async def register_user(request: Request):
         conn = mysql.connector.connect(
             user=os.getenv('DB_USER'),
             password=os.getenv('DB_PASSWORD'),
-            host=os.getenv('DB_HOST'),
-            database=os.getenv('DB_NAME')
+            host='192.168.0.3',
+            database='maicoder'
         )
         cursor = conn.cursor()
         cursor.execute(
@@ -38,7 +38,7 @@ async def register_user(request: Request):
         conn.close()
 
         payload = {
-            "sub": user["name"],
+            "sub": name,
             "exp": datetime.utcnow() + timedelta(days=30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
@@ -63,8 +63,8 @@ async def login_user(request: Request):
         conn = mysql.connector.connect(
             user=os.getenv('DB_USER'),
             password=os.getenv('DB_PASSWORD'),
-            host=os.getenv('DB_HOST'),
-            database=os.getenv('DB_NAME')
+            host='192.168.0.3',
+            database='maicoder'
         )
         cursor = conn.cursor(dictionary=True)
         cursor.execute(

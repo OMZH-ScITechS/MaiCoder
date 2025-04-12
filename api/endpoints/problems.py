@@ -40,8 +40,8 @@ async def submit_problem(subpath: str, request: Request, current_user: str = Dep
         data = await request.json()
 
         # Add username to the submission data
-        data["submitted_by"] = current_user
-        data["submitted_at"] = datetime.utcnow().isoformat()
+        data["user"] = current_user
+        data["time"] = datetime.utcnow().isoformat()
 
         os.makedirs(submit_dir + subpath, exist_ok=True)
 
