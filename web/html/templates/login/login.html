@@ -39,10 +39,25 @@
         </form>
     </div>
     <script>
-        function login() {
+        async function login() {
             let user_data = {
                 user: document.querySelector("input.user").value,
                 password: document.querySelector("input.password").value
+            }
+            try {
+                let response = await fetch("https://api.maicoder.f5.si/users/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user_data)
+                });
+                if (response.status == 200) {
+                    let data = await response.json();
+                    console.log(data);
+                }
+            } catch (error) {
+                console.error("エラーが発生しました:", error);
             }
         }
     </script>
