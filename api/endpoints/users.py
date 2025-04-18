@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 @router.post("/register")
 async def register_user(request: Request):
     body = await request.json()
-    name = body.get("name")
+    name = body.get("user")
     password = body.get("pass")
 
     if not name or not password:
@@ -50,7 +50,7 @@ async def register_user(request: Request):
 @router.post("/login")
 async def login_user(request: Request):
     body = await request.json()
-    name = body.get("name")
+    name = body.get("user")
     password = body.get("pass")
 
     if not name or not password:

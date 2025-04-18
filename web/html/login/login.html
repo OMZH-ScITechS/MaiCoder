@@ -42,7 +42,7 @@
         async function login() {
             let user_data = {
                 user: document.querySelector("input.user").value,
-                password: document.querySelector("input.password").value
+                pass: document.querySelector("input.password").value
             }
             try {
                 let response = await fetch("https://api.maicoder.f5.si/users/login", {
