@@ -1,5 +1,5 @@
 fastapi==0.70.0
 uvicorn==0.15.0
 requests
-jwt
+PyJWT
 mysql-connector-python
