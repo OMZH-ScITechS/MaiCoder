@@ -30,7 +30,7 @@ async def register_user(request: Request):
         )
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO users (name, pass) VALUES (%s, %s)",
+            "INSERT INTO users (user, pass) VALUES (%s, %s)",
             (name, hashed_password)
         )
         conn.commit()
@@ -68,7 +68,7 @@ async def login_user(request: Request):
         )
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
-            "SELECT * FROM users WHERE name = %s AND pass = %s",
+            "SELECT * FROM users WHERE user = %s AND pass = %s",
             (name, hashed_password)
         )
         user = cursor.fetchone()
