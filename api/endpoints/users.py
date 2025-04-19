@@ -80,7 +80,7 @@ async def login_user(request: Request):
 
         # Generate JWT token
         payload = {
-            "sub": user["name"],
+            "sub": name,
             "exp": datetime.utcnow() + timedelta(days=30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
