@@ -3,7 +3,7 @@ from fastapi.security import HTTPBearer
 import os
 import json
 import jwt
-from ..judge import judge_submission  # Use relative import
+import requests
 from datetime import datetime
 
 router = APIRouter()
@@ -54,12 +54,31 @@ async def run_tests(subpath: str, submit_id: str):
 
         for i, test in enumerate(tests, start=1):
             try:
-                # Use the judge logic directly
-                result = judge_submission(test["input"], submission_data)
-                if result.get("status") == "passed":
-                    passed_count += 1
+                # Inline judging logic (same as judge.py)
+                input_data = test["input"]
+                code = submission_data.get("code", 'print("hello world")')
+                compiler = submission_data.get("compiler", "pypy-3.7-v7.3.9")
+
+                # Simulate Wandbox API call
+                url = "https://wandbox.org/api/compile.json"
+                payload = {
+                    "code": code,
+                    "compiler": compiler,
+                    "stdin": input_data
+                }
+                response = requests.post(url, json=payload)
+
+                if response.status_code == 200:
+                    result = response.json()
+                    actual_output = result.get("program_output", "").strip()
+                    expected_output = test["output"].strip()
+
+                    if actual_output == expected_output:
+                        passed_count += 1
+                    else:
+                        wrong_count += 1
                 else:
-                    wrong_count += 1
+                    error_count += 1
             except Exception:
                 error_count += 1
 
