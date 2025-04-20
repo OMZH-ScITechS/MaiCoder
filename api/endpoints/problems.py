@@ -86,13 +86,13 @@ async def run_tests(subpath: str, submit_id: str):
 
             # Determine the status
             if error_count > 0:
-                status = "error"
+                status = "RE"
             elif wrong_count > 0:
-                status = "wrong"
+                status = "WA"
             elif passed_count == len(tests):
-                status = "passed"
+                status = "AC"
             else:
-                status = "processing"
+                status = "IP"
 
             # Update the submission file incrementally
             total_tests = len(tests)
@@ -141,7 +141,7 @@ async def submit_problem(
             "wrong": 0,
             "error": 0,
             "total": total_tests,
-            "status": "Pending"
+            "status": "WJ"
         }
 
         os.makedirs(submit_dir + subpath, exist_ok=True)
