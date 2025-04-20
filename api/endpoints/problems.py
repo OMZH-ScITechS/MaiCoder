@@ -89,6 +89,8 @@ async def run_tests(subpath: str, submit_id: str):
                 status = "error"
             elif wrong_count > 0:
                 status = "wrong"
+            elif passed_count == len(tests):
+                status = "passed"
             else:
                 status = "processing"
 
