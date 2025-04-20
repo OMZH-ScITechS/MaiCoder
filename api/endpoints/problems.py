@@ -3,6 +3,7 @@ from fastapi.security import HTTPBearer
 import os
 import json
 import jwt
+from ..judge import judge_submission  # Use relative import
 from datetime import datetime
 
 router = APIRouter()
@@ -35,7 +36,56 @@ async def get_problems(subpath: str):
         return {"error": str(e)}, 500
 
 async def run_tests(subpath: str, submit_id: str):
-    print(f"Running tests for submission {submit_id} in {subpath}")
+    try:
+        submission_file_path = f"{submit_dir}{subpath}/{submit_id}.json"
+
+        # Load the submission file
+        with open(submission_file_path, "r") as submission_file:
+            submission_data = json.load(submission_file)
+
+        # Load the problem file to get the tests
+        with open(f"{problems_dir}{subpath}.json", "r") as problem_file:
+            problem_data = json.load(problem_file)
+            tests = problem_data.get("tests", [])
+
+        passed_count = 0
+        wrong_count = 0
+        error_count = 0
+
+        for i, test in enumerate(tests, start=1):
+            try:
+                # Use the judge logic directly
+                result = judge_submission(test["input"], submission_data)
+                if result.get("status") == "passed":
+                    passed_count += 1
+                else:
+                    wrong_count += 1
+            except Exception:
+                error_count += 1
+
+            # Determine the status
+            if error_count > 0:
+                status = "error"
+            elif wrong_count > 0:
+                status = "wrong"
+            else:
+                status = "processing"
+
+            # Update the submission file incrementally
+            total_tests = len(tests)
+            submission_data["test_results"] = {
+                "passed": passed_count,
+                "wrong": wrong_count,
+                "error": error_count,
+                "total": total_tests,
+                "status": status
+            }
+            with open(submission_file_path, "w") as submission_file:
+                json.dump(submission_data, submission_file)
+
+            print(f"Test {i}/{total_tests} processed for submission {submit_id} in {subpath}")
+    except Exception as e:
+        print(f"Error running tests for submission {submit_id} in {subpath}: {e}")
 
 @router.post("/submit/{subpath:path}")
 async def submit_problem(
@@ -47,12 +97,21 @@ async def submit_problem(
     try:
         data = await request.json()
 
-        # Add username and placeholder test results to the submission data
+        # Add username to the submission data
         data["user"] = current_user
         data["time"] = datetime.utcnow().isoformat()
+
+        # Load the problem file to get the number of tests
+        with open(f"{problems_dir}{subpath}.json", "r") as problem_file:
+            problem_data = json.load(problem_file)
+            total_tests = len(problem_data.get("tests", []))
+
+        # Add placeholder test results to the submission data
         data["test_results"] = {
             "passed": 0,
-            "total": 0,
+            "wrong": 0,
+            "error": 0,
+            "total": total_tests,
             "status": "Pending"
         }
 
