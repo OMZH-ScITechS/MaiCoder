@@ -214,9 +214,18 @@
 
         async function get_submit(data) {
             const url = `https://api.maicoder.f5.si/problems/submit/${location.pathname.split('/')[2]}`;
+            const token = localStorage.getItem("jwt_token")
+            if (!token) {
+                throw new Error("ログインしてください")
+            }
+
             try {
                 const response = await fetch(url, {
                     method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
                     body: JSON.stringify(data),
                 });
                 if (!response.ok) {
