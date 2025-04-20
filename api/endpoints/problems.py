@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, HTTPException, Depends
+from fastapi import APIRouter, Request, HTTPException, Depends, BackgroundTasks
 from fastapi.security import HTTPBearer
 import os
 import json
@@ -34,14 +34,27 @@ async def get_problems(subpath: str):
     except Exception as e:
         return {"error": str(e)}, 500
 
+async def run_tests(subpath: str, submit_id: str):
+    print(f"Running tests for submission {submit_id} in {subpath}")
+
 @router.post("/submit/{subpath:path}")
-async def submit_problem(subpath: str, request: Request, current_user: str = Depends(get_current_user)):
+async def submit_problem(
+    subpath: str, 
+    request: Request, 
+    background_tasks: BackgroundTasks, 
+    current_user: str = Depends(get_current_user)
+):
     try:
         data = await request.json()
 
-        # Add username to the submission data
+        # Add username and placeholder test results to the submission data
         data["user"] = current_user
         data["time"] = datetime.utcnow().isoformat()
+        data["test_results"] = {
+            "passed": 0,
+            "total": 0,
+            "status": "Pending"
+        }
 
         os.makedirs(submit_dir + subpath, exist_ok=True)
 
@@ -50,8 +63,15 @@ async def submit_problem(subpath: str, request: Request, current_user: str = Dep
         
         with open(f"{submit_dir}{subpath}/{submit_id}.json", "w") as file:
             json.dump(data, file)
+
+        # Add the test execution to background tasks
+        background_tasks.add_task(run_tests, subpath, submit_id)
         
-        result = {"status": "success", "submit_id": submit_id, "submitted_by": current_user}
+        result = {
+            "status": "success",
+            "submit_id": submit_id,
+            "submitted_by": current_user
+        }
         
         return result
     except FileNotFoundError:
