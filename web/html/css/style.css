@@ -107,14 +107,12 @@ button.primary:active {
 }
 
 #editor {
-    border: 1px #ccc solid;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 
 .output {
     padding: 8px 16px;
     border: 1px #393939 solid;
-    border-radius: 4px;
     background-color: #222222;
     overflow-y: scroll;
     color: #fff;
@@ -140,7 +138,10 @@ button.primary:active {
 
 pre:has(code) {
     padding: 20px;
-    background-color: #eee;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 4px;
 }
 
 .test_case-container {
@@ -210,7 +211,7 @@ button.copy {
     position: absolute;
     z-index: 100;
     right: 0;
-    transform: translate(-5px, 5px);
+    transform: translate(-25px, 5px);
     padding: 4px 6px;
     background-color: #fff;
 }

@@ -2,7 +2,7 @@
 
 body {
     background-color: #f8f8f8;
-    font-size: 17px;
+    font-size: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,10 +10,8 @@ body {
 }
 
 .form-container {
-    width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 52px;
 }
 
 form {
@@ -26,7 +24,7 @@ form {
 form textarea.code,
 #editor {
     width: 100%;
-    height: 300px;
+    height: 100%;
 }
 
 textarea.input {
@@ -44,7 +42,6 @@ form button {
 .output {
     width: 100%;
     min-height: 100px;
-    max-height: 300px;
     overflow-y: scroll;
 }
 

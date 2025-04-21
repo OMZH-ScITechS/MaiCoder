@@ -7,11 +7,10 @@
     <title>mondai</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/material-symbols@0.2.3/index.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.min.js"></script>
     <style>
         main {
@@ -19,49 +18,64 @@
             max-width: 100%;
             position: fixed;
             top: 60px;
-            height: calc(100% - 60px);
+            height: calc(100% - 70px);
             padding: 0;
             gap: 0;
             display: flex;
+            background-color: #eee;
+            border: none;
+        }
+
+        header {
+            background-color: #eee;
+            border: none;
+            outline: none;
+            align-items: center;
+        }
+
+        header .left {
+            align-items: center;
         }
 
         #content {
-            overflow: scroll;
+            overflow-y: scroll;
             padding: 20px;
             padding-top: 0;
+            height: 100%;
         }
 
         #content h1 {
             font-size: 26px;
         }
 
-        #code-test {
+        #code {
             float: left;
             width: 50%;
             height: 100%;
             display: flex;
-            gap: 10px;
             flex-direction: column;
-            padding: 10px;
         }
 
         #problem {
             width: 50%;
             height: 100%;
-            overflow: scroll;
             float: left;
             width: 50%;
         }
 
         .gutter {
-            cursor: ew-resize;
+            cursor: grab;
             height: 100%;
-            background-color: #dfdfdf;
+            background-color: none;
+        }
+
+        .gutter:active {
+            background-color: #aaa;
         }
 
         form {
             height: 100%;
-            gap: 10px;
+            gap: 0px;
         }
 
         select {
@@ -78,14 +92,70 @@
         }
 
         .output {
-            overflow: scroll;
-            height: 100px;
+            overflow-y: scroll;
+            height: 100%;
+            flex-grow: 1;
         }
 
         .code {
             display: flex;
             flex-direction: column;
             height: 100%;
+        }
+
+        #problem {
+            margin-left: 8px;
+            border-radius: 10px 4px 4px 10px;
+            font-size: 17px;
+        }
+
+        #code {
+            margin-right: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #code-test,
+        #in-out {
+            border-radius: 4px 10px 10px 4px;
+            height: 100%;
+        }
+
+        .wrap-panel {
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+
+        span.material-symbols-outlined {
+            font-size: 1.4em;
+            vertical-align: text-bottom !important;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+            margin-right: 2px;
+        }
+
+        .top {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            justify-content: space-between;
+        }
+
+        .top .material-symbols-outlined {
+            color: rgb(151, 151, 151);
+        }
+
+        #code-test {
+            padding: 0;
+        }
+
+        .action button {
+            height: 30px;
+            background-color: none;
         }
     </style>
 </head>
@@ -101,43 +171,77 @@
         </div>
         <div class="right">
             <button type="button" class="primary submit" onclick="problem_submit()">
-                <p>提出</p>
+                <p>
+                    <span class="material-symbols-outlined">
+                        send
+                    </span>
+                    提出
+                </p>
             </button>
         </div>
     </header>
     <main>
-        <div id="problem">
+        <div id="problem" class="wrap-panel">
+            <div class="top">
+                <p>
+                    <span class="material-symbols-outlined">
+                        description
+                    </span>
+                    問題
+                </p>
+            </div>
             <div id="content"></div>
         </div>
-        <div class="form-container" id="code-test">
-            <form>
-                <div class="code">
-                    <select class="compiler" onchange="compiler_change()">
-                        <option value="python,pypy-3.7-v7.3.9">Python: pypy-3.7-v7.3.9</option>
-                        <option value="c++,gcc-head">C++: gcc-head</option>
-                    </select>
-                    <div id="editor"></div>
+        <div id="code">
+            <div class="form-container wrap-panel" id="code-test">
+                <div class="top">
+                    <p>
+                        <span class="material-symbols-outlined">
+                            code
+                        </span>
+                        コード
+                    </p>
+                </div>
+                <form>
+                    <div class="code">
+                        <select class="compiler" onchange="compiler_change()">
+                            <option value="python,pypy-3.7-v7.3.9">Python: pypy-3.7-v7.3.9</option>
+                            <option value="c++,gcc-head">C++: gcc-head</option>
+                        </select>
+                        <div id="editor"></div>
+                    </div>
+                </form>
+            </div>
+            <div id="in-out" class="wrap-panel">
+                <div class="top" style="padding-top:7px;padding-bottom: 7px;">
+                    <p>
+                        <span class="material-symbols-outlined">
+                            terminal
+                        </span>
+                        テスト
+                    </p>
+                    <div class="action">
+                        <div class="test-result"></div>
+                        <button type="button" onclick="in_judge()">
+                            <p>コードテスト</p>
+                        </button>
+                        <button type="button" class="primary go" onclick="go()"
+                            style="min-width: 110px; justify-content: center;">
+                            <p>実行</p>
+                            <div class="loader"></div>
+                        </button>
+                    </div>
                 </div>
                 <label>
-                    <textarea class="input monospace" placeholder="標準入力..."></textarea>
+                    <textarea class="input monospace" placeholder="標準入力"></textarea>
                 </label>
-                <div class="action">
-                    <button type="button" class="primary go" onclick="go()">
-                        <p>実行<span>中...</span></p>
-                        <div class="loader"></div>
-                    </button>
-                    <button type="button" onclick="in_judge()">
-                        <p>コードテスト</p>
-                    </button>
-                    <div class="test-result"></div>
-                </div>
-            </form>
-            <label>
-                <!--<p>応答時間:<span class="speed"></span></p>--->
-                <div class="output">
-                    <code></code>
-                </div>
-            </label>
+                <label>
+                    <!--<p>応答時間:<span class="speed"></span></p>--->
+                    <div class="output">
+                        <code></code>
+                    </div>
+                </label>
+            </div>
         </div>
     </main>
     <script src="../../js/submit.js"></script>
@@ -148,8 +252,14 @@
             output: []
         }
 
-        Split(['#problem', '#code-test'],{
-            gutterSize: 4
+        Split(['#problem', '#code'], {
+            gutterSize: 10
+        })
+
+        Split(['#code-test', '#in-out'], {
+            gutterSize: 10,
+            direction: 'vertical',
+            sizes: [70, 30],
         })
 
         function set_title(name) {
