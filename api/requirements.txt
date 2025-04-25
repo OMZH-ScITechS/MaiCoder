@@ -3,4 +3,3 @@ uvicorn==0.15.0
 requests
 PyJWT
 mysql-connector-python
-re
