@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテスト</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.0/ace.js"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        section.pinned {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            padding: 20px;
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        section.pinned a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #ffffff32;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+        }
+
+        section.pinned h2 {
+            font-size: 32px;
+        }
+
+        section.pinned div{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="./">
+            <img src="img/logo.svg" alt="MaiCoder">
+        </a>
+        <div>
+            <a href="editor.html">作問エディタ</a>
+            <div class="div">
+                <a href="./login/signup.html">新規登録</a>
+                <a href="./login/login.html" class="primary">ログイン</a>
+            </div>
+            <div class="logined" style="display: none;">
+                <img src="./img/user.svg" alt="">
+                <p>{user名}</p>
+            </div>
+        </div>
+    </header>
+    <div class="title">
+        <h1>コンテスト一覧</h1>
+        <p>これから/過去のコンテスト</p>
+    </div>
+    <nav>
+        <button class="active" onclick="new nav(this)" value="planned">予定</button>
+        <button onclick="new nav(this)" value="finished">終了</button>
+    </nav>
+    <main class="planned active">
+        <section class="pinned">
+            <div>
+                <p>最新のコンテスト</p>
+                <h2>MWC 001</h2>
+                <p class="date">4/25(金) 21:00</p>
+            </div>
+            <a href="">コンテストへ移動</a>
+        </section>
+        <table class="border">
+            <tr>
+                <td class="name">コンテスト名</td>
+                <td>開始日時</td>
+            </tr>
+            <tr>
+                <td class="name">
+                    <a href="">mwc001</a>
+                </td>
+                <td>開始日時</td>
+            </tr>
+        </table>
+    </main>
+    <main class="finished">
+        <table class="border">
+            <tr>
+                <td class="name">コンテスト名</td>
+                <td>開始日時</td>
+            </tr>
+            <tr>
+                <td class="name">
+                    <a href="">mwc001</a>
+                </td>
+                <td>開始日時</td>
+            </tr>
+        </table>
+    </main>
+    <script>
+        class nav {
+            constructor(element) {
+                document.querySelector("button.active").classList.remove("active")
+                document.querySelector("main.active").classList.remove("active")
+                this.element = element
+                this.element.classList.add("active")
+                document.querySelector(`main.${this.element.value}`).classList.add("active")
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -13,19 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/material-symbols@0.2.3/index.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.min.js"></script>
     <style>
-        main {
-            flex-direction: row;
-            max-width: 100%;
-            position: fixed;
-            top: 60px;
-            height: calc(100% - 70px);
-            padding: 0;
-            gap: 0;
-            display: flex;
-            background-color: #eee;
-            border: none;
-        }
-
         header {
             background-color: #eee;
             border: none;
@@ -38,10 +25,11 @@
         }
 
         #content {
-            overflow-y: scroll;
+            overflow-y: auto;
             padding: 20px;
             padding-top: 0;
             height: 100%;
+            color: #111;
         }
 
         #content h1 {
@@ -92,7 +80,6 @@
         }
 
         .output {
-            overflow-y: scroll;
             height: 100%;
             flex-grow: 1;
         }
@@ -140,9 +127,12 @@
             display: flex;
             align-items: center;
             background-color: #f9f9f9;
-            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 42px;
             border-bottom: 1px solid #eee;
             justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .top .material-symbols-outlined {
@@ -180,7 +170,7 @@
             </button>
         </div>
     </header>
-    <main>
+    <main class="panels">
         <div id="problem" class="wrap-panel">
             <div class="top">
                 <p>
@@ -201,19 +191,19 @@
                         </span>
                         コード
                     </p>
+                    <select class="compiler" onchange="compiler_change()">
+                        <option value="python,pypy-3.7-v7.3.9">Python: pypy-3.7</option>
+                        <option value="c++,gcc-head">C++: gcc-head</option>
+                    </select>
                 </div>
                 <form>
                     <div class="code">
-                        <select class="compiler" onchange="compiler_change()">
-                            <option value="python,pypy-3.7-v7.3.9">Python: pypy-3.7-v7.3.9</option>
-                            <option value="c++,gcc-head">C++: gcc-head</option>
-                        </select>
                         <div id="editor"></div>
                     </div>
                 </form>
             </div>
             <div id="in-out" class="wrap-panel">
-                <div class="top" style="padding-top:7px;padding-bottom: 7px;">
+                <div class="top">
                     <p>
                         <span class="material-symbols-outlined">
                             terminal
@@ -267,7 +257,7 @@
         }
 
         async function set_problem() {
-            const json = await get_problem("00001")
+            const json = await get_problem(location.pathname.split('/')[2])
             await preview(json.content.split('\\n').join('\n'))
             await set_title(json.name)
         }

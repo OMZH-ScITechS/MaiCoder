@@ -1,3 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap');
+
+body {
+    background-color: #f8f8f8;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Geist", "Noto Sans JP", serif;;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form textarea.code,
+#editor {
+    width: 100%;
+    height: 100%;
+}
+
+textarea.input {
+    width: 100%;
+    resize: vertical;
+}
+
+select.compiler {
+    width: fit-content;
+}
+
+form button {
+    width: fit-content;
+}
+
+.output {
+    width: 100%;
+    min-height: 100px;
+    overflow-y: scroll;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+    background-color: #ffffffc0;
+    backdrop-filter: blur(10px);
+    color: #111;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
+header div {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 20px;
+}
+
+header img {
+    width: 150px;
+}
+
+.title {
+    height: 156px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title h1 {
+    font-size: 32px;
+}
+
+.title p {
+    opacity: 0.8;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 18px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid;
+    border-color: #ffffff #ffffff00;
+    animation: l1 1s infinite;
+}
+
+@keyframes l1 {
+    to {
+        transform: rotate(.5turn)
+    }
+}
+
+table td,
+th {
+    padding: 4px;
+    vertical-align: middle;
+}
+
+ul {
+    list-style: disc;
+}
+
+textarea.code {
+    font-family: monospace;
+}
+
+
+
+input[type="checkbox"]{
+    transform: scale(1.4);
+    transform-origin: center left;
+}
+
 h1 {
     font-size: 32px;
     font-weight: 600;
@@ -113,8 +242,8 @@ button.primary:active {
 .output {
     padding: 8px 16px;
     border: 1px #393939 solid;
-    background-color: #222222;
-    overflow-y: scroll;
+    background-color: #2e2e2e;
+    overflow-y: auto;
     color: #fff;
 }
 
@@ -342,4 +471,65 @@ table.border td {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+header a.primary {
+    background: #222;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+section.top .wrap{
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    line-height: 1.3;
+    align-items: center;
+}
+
+section .action {
+    margin-top: 12px;
+}
+
+section h2 {
+    font-size: 17px;
+}
+
+.logined img {
+    width: 34px;
+    height: 34px;
+}
+
+.logined {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 17px;
+}
+
+main.panels {
+    flex-direction: row;
+    max-width: 100%;
+    position: fixed;
+    top: 60px;
+    height: calc(100% - 70px);
+    padding: 0;
+    gap: 0;
+    display: flex;
+    background-color: #eee;
+    border: none;
+}
+
+main {
+    display: none;
+}
+
+main.active {
+    display: inherit;
+}
+
+td.result {
+    display: flex;
 }
