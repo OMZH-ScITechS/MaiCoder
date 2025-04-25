@@ -13,19 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/material-symbols@0.2.3/index.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.min.js"></script>
     <style>
-        main {
-            flex-direction: row;
-            max-width: 100%;
-            position: fixed;
-            top: 60px;
-            height: calc(100% - 70px);
-            padding: 0;
-            gap: 0;
-            display: flex;
-            background-color: #eee;
-            border: none;
-        }
-
         header {
             background-color: #eee;
             border: none;
@@ -183,7 +170,7 @@
             </button>
         </div>
     </header>
-    <main>
+    <main class="panels">
         <div id="problem" class="wrap-panel">
             <div class="top">
                 <p>
@@ -270,7 +257,7 @@
         }
 
         async function set_problem() {
-            const json = await get_problem("00001")
+            const json = await get_problem(location.pathname.split('/')[2])
             await preview(json.content.split('\\n').join('\n'))
             await set_title(json.name)
         }
