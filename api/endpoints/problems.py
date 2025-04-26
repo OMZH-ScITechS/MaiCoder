@@ -31,6 +31,7 @@ async def get_problems(subpath: str):
                     with open(os.path.join(problems_dir, filename), "r") as file:
                         file_content = json.load(file)
                         del file_content["tests"]
+                        file_content["id"] = filename[:-5]
                         all_files.append(file_content)
             return all_files
         else:
