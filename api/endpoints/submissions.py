@@ -19,11 +19,11 @@ async def get_submissions(subpath: str):
             directory_path = os.path.join(submit_dir, subpath)
             if not os.path.isdir(directory_path):
                 return {"error": "Directory not found"}, 404
-            all_files = {}
+            all_files = []
             for filename in os.listdir(directory_path):
                 if filename.endswith(".json"):
                     with open(os.path.join(directory_path, filename), "r") as file:
-                        all_files[filename] = json.load(file)
+                        all_files.append(json.load(file))
             return all_files
         else:
             return {"error": "Invalid path format"}, 400
