@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,11 @@
     <main style="align-items: baseline;">
         <section>
             <label>コンテストタイトル:</label>
-            <input type="text" style="max-width: 370px; width: 100%;">
+            <input type="text" style="max-width: 370px; width: 100%;" class="contest-title">
+        </section>
+        <section>
+            <label>コンテストの詳細:</label>
+            <textarea class="content"></textarea>
         </section>
         <section>
             <label>開始日時:</label>
@@ -83,6 +88,39 @@
         <button class="primary" onclick="post()">送信</button>
     </main>
     <script>
+        async function post() {
+            const title = document.querySelector('input.contest-title').value;
+            const content = document.querySelector('textarea.content').value;
+            const startTime = document.querySelector('input[type="datetime-local"]').value;
+            const problems = Array.from(document.querySelectorAll("tbody tr")).slice(1).map(row => {
+                return {
+                    id: row.querySelector(".id").value,
+                    score: parseInt(row.querySelector(".score input").value, 10)
+                };
+            });
+
+            const payload = {
+                name: title,
+                type: "mwc",
+                date: startTime,
+                content: content,
+                problems: problems
+            };
+
+            try {
+                const response = await fetch("https://api.maicoder.f5.si/contests/post", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
         async function set_id(element) {
             // 00001とかが入力完了されたとき
             let $name = element.closest("td").nextElementSibling.children[0] //<p>を取得
