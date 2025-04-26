@@ -24,7 +24,7 @@ async def get_submissions(subpath: str):
                 if filename.endswith(".json"):
                     with open(os.path.join(directory_path, filename), "r") as file:
                         file_content = json.load(file)
-                        file_content.pop("code")
+                        del file_content["code"]
                         all_files.append(file_content)
             return all_files
         else:

@@ -15,7 +15,7 @@ async def get_contest_datail(subpath: str):
                 if filename.endswith(".json"):
                     with open(os.path.join(contests_dir, filename), "r") as file:
                         file_content = json.load(file)
-                        file_content.pop("problems")
+                        del file_content["problems"]
                         all_files.append(file_content)
             return all_files
         else:
