@@ -24,10 +24,20 @@ def get_current_user(token: str = Depends(security)):
 @router.get("/{subpath:path}")
 async def get_problems(subpath: str):
     try:
-        with open(f"{problems_dir}{subpath}.json", "r") as file:
-            content = json.load(file)
-            del content["tests"]
-        return content
+        if subpath == "":  # Root path
+            all_files = []
+            for filename in os.listdir(problems_dir):
+                if filename.endswith(".json"):
+                    with open(os.path.join(problems_dir, filename), "r") as file:
+                        file_content = json.load(file)
+                        del file_content["tests"]
+                        all_files.append(file_content)
+            return all_files
+        else:
+            with open(f"{problems_dir}{subpath}.json", "r") as file:
+                content = json.load(file)
+                del content["tests"]
+            return content
     except FileNotFoundError:
         return {"error": "File not found"}, 404
     except json.JSONDecodeError:

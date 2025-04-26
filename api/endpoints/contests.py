@@ -9,12 +9,22 @@ contests_dir = "/app/data/contests/"
 @router.get("/{subpath:path}")
 async def get_contest_datail(subpath: str):
     try:
-        with open(f"{contests_dir}{subpath}.json", "r") as file:
-            content = json.load(file)
-            contest_date = datetime.fromisoformat(content.get("date"))
-            if contest_date > datetime.now():
-                del content["problems"]
-        return content
+        if subpath == "":  # Root path
+            all_files = []
+            for filename in os.listdir(contests_dir):
+                if filename.endswith(".json"):
+                    with open(os.path.join(contests_dir, filename), "r") as file:
+                        file_content = json.load(file)
+                        file_content.pop("problems")
+                        all_files.append(file_content)
+            return all_files
+        else:
+            with open(f"{contests_dir}{subpath}.json", "r") as file:
+                content = json.load(file)
+                contest_date = datetime.fromisoformat(content.get("date"))
+                if contest_date > datetime.now():
+                    del content["problems"]
+            return content
     except FileNotFoundError:
         return {"error": "File not found"}, 404
     except json.JSONDecodeError:
