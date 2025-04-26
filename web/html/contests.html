@@ -87,7 +87,7 @@
     <main class="planned active">
         <section class="pinned">
             <div class="latest-contest">
-                <p></p>
+                <p>最新のコンテスト</p>
                 <h2></h2>
                 <p class="date"></p>
             </div>
@@ -124,7 +124,7 @@
             const nameElement = contest.querySelector(".name a");
             const dateElement = contest.querySelector("td:nth-child(2)");
             nameElement.textContent = element.name;
-            nameElement.href = element.url;
+            nameElement.href = "https://maicoder.f5.si/contests/" + element.toLowerCase;
             dateElement.textContent = element.date;
             document.querySelector(`main.${time} table`).appendChild(contest);
         }
