@@ -35,15 +35,31 @@
             font-size: 32px;
         }
 
-        section.pinned div{
+        section.pinned div {
             display: flex;
             flex-direction: column;
             gap: 10px;
+        }
+
+        main {
+            display: none;
+        }
+
+        main.active {
+            display: inherit;
         }
     </style>
 </head>
 
 <body>
+    <template class="contest">
+        <tr>
+            <td class="name">
+                <a href=""></a>
+            </td>
+            <td>開始日時</td>
+        </tr>
+    </template>
     <header>
         <a href="./">
             <img src="img/logo.svg" alt="MaiCoder">
@@ -70,10 +86,10 @@
     </nav>
     <main class="planned active">
         <section class="pinned">
-            <div>
-                <p>最新のコンテスト</p>
-                <h2>MWC 001</h2>
-                <p class="date">4/25(金) 21:00</p>
+            <div class="latest-contest">
+                <p></p>
+                <h2></h2>
+                <p class="date"></p>
             </div>
             <a href="">コンテストへ移動</a>
         </section>
@@ -82,24 +98,12 @@
                 <td class="name">コンテスト名</td>
                 <td>開始日時</td>
             </tr>
-            <tr>
-                <td class="name">
-                    <a href="">mwc001</a>
-                </td>
-                <td>開始日時</td>
-            </tr>
         </table>
     </main>
     <main class="finished">
         <table class="border">
             <tr>
                 <td class="name">コンテスト名</td>
-                <td>開始日時</td>
-            </tr>
-            <tr>
-                <td class="name">
-                    <a href="">mwc001</a>
-                </td>
                 <td>開始日時</td>
             </tr>
         </table>
@@ -114,6 +118,48 @@
                 document.querySelector(`main.${this.element.value}`).classList.add("active")
             }
         }
+
+        function append_contest(time, element) {
+            const contest = document.querySelector("template.contest").content.cloneNode(true)
+            const nameElement = contest.querySelector(".name a");
+            const dateElement = contest.querySelector("td:nth-child(2)");
+            nameElement.textContent = element.name;
+            nameElement.href = element.url;
+            dateElement.textContent = element.date;
+            document.querySelector(`main.${time} table`).appendChild(contest);
+        }
+
+        async function load_contests() {
+            let latestContest = null;
+            let closestTime = Infinity;
+
+            const response = await fetch("https://api.maicoder.f5.si/contests/");
+            const json = await response.json();
+
+            json.forEach(element => {
+                const dataTime = new Date(element.date);
+                const now = new Date();
+                const timeDifference = Math.abs(dataTime - now);
+
+                if (dataTime > now && timeDifference < closestTime) {
+                    closestTime = timeDifference;
+                    latestContest = element;
+                }
+
+                if (now < dataTime) { // 予定
+                    append_contest("planned", element);
+                } else { // 終了
+                    append_contest("finished", element);
+                }
+            });
+
+            if (latestContest) {
+                document.querySelector(".latest-contest h2").textContent = latestContest.name;
+                document.querySelector(".latest-contest .date").textContent = latestContest.date;
+                document.querySelector(".pinned a").href = latestContest.url;
+            }
+        }
+        load_contests()
     </script>
 </body>
 
