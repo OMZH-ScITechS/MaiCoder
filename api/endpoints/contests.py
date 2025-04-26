@@ -37,12 +37,15 @@ async def post_contest(request: Request):
     try:
         data = await request.json()
 
-        contest_id = data.name.lower()
+        # Correctly access the 'name' field from the JSON data
+        contest_id = data["name"].lower()
         
         with open(f"{contests_dir}{contest_id}.json", "w") as file:
             json.dump(data, file)
         
         return {"contest_id": contest_id}
+    except KeyError:
+        return {"error": "'name' field is required in the JSON data"}, 400
     except json.JSONDecodeError:
         return {"error": "Invalid JSON format"}, 400
     except Exception as e:
