@@ -130,7 +130,7 @@
             const nameElement = contest.querySelector(".name a");
             const dateElement = contest.querySelector("td:nth-child(2)");
             nameElement.textContent = element.name;
-            nameElement.href = "https://maicoder.f5.si/contests/" + element.toLowerCase;
+            nameElement.href = "https://maicoder.f5.si/contests/" + element.name.toLowerCase;
             dateElement.textContent = element.date;
             document.querySelector(`main.${time} table`).appendChild(contest);
         }
