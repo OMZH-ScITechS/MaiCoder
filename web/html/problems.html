@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンテスト</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <template class="problem">
+        <tr>
+            <td class="name">
+                <a href=""></a>
+            </td>
+            <td>開始日時</td>
+        </tr>
+    </template>
+    <header>
+        <a href="./index.html">
+            <img src="./img/logo.svg" alt="MaiCoder">
+        </a>
+        <div>
+            <a href="./editor.html">作問エディタ</a>
+            <a href="./contests.html">コンテスト</a>
+            <a href="./problems.html">問題集</a>
+            <div class="border"></div>
+            <div class="div">
+                <a href="./login/signup.html">新規登録</a>
+                <a href="./login/login.html" class="primary">ログイン</a>
+            </div>
+            <button class="logined" style="display: none; padding: 4px; border: none;" onclick="menu_toggle()">
+                <img src="./img/user.svg" alt="">
+                <p></p>
+            </button>
+            <div class="logined_menu">
+                <a href="">プロフィール</a>
+                <a href="">ログアウト</a>
+            </div>
+        </div>
+    </header>
+    <div class="title">
+        <h1>問題集</h1>
+        <p>様々な難易度の問題を解くことができます</p>
+    </div>
+    <main class="">
+        <table class="border">
+            <tr>
+                <td class="name">問題名</td>
+                <td>難易度</td>
+            </tr>
+        </table>
+    </main>
+    <script src="./js/user.js"></script>
+    <script>
+        function append_problem(element) {
+            const contest = document.querySelector("template.problem").content.cloneNode(true)
+            const nameElement = contest.querySelector(".name a");
+            const difficultyElement = contest.querySelector("td:nth-child(2)");
+            nameElement.textContent = element.name;
+            nameElement.href = "https://maicoder.f5.si/problems/" + element.id;
+            difficultyElement.textContent = element.difficulty;
+            document.querySelector(`main table`).appendChild(contest);
+        }
+
+        async function load_problems() {
+            let latestContest = null;
+            let closestTime = Infinity;
+
+            const response = await fetch("https://api.maicoder.f5.si/problems/");
+            const json = await response.json();
+            console.log(json)
+            json.forEach(element => {
+                append_problem(element);
+            });
+        }
+        load_problems()
+    </script>
+</body>
+
+</html>

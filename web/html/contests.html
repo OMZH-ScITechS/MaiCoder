@@ -59,18 +59,25 @@
         </tr>
     </template>
     <header>
-        <a href="./">
-            <img src="img/logo.svg" alt="MaiCoder">
+        <a href="./index.html">
+            <img src="./img/logo.svg" alt="MaiCoder">
         </a>
         <div>
-            <a href="editor.html">作問エディタ</a>
+            <a href="./editor.html">作問エディタ</a>
+            <a href="./contests.html">コンテスト</a>
+            <a href="./problems.html">問題集</a>
+            <div class="border"></div>
             <div class="div">
                 <a href="./login/signup.html">新規登録</a>
                 <a href="./login/login.html" class="primary">ログイン</a>
             </div>
-            <div class="logined" style="display: none;">
+            <button class="logined" style="display: none; padding: 4px; border: none;" onclick="menu_toggle()">
                 <img src="./img/user.svg" alt="">
-                <p>{user名}</p>
+                <p></p>
+            </button>
+            <div class="logined_menu">
+                <a href="">プロフィール</a>
+                <a href="">ログアウト</a>
             </div>
         </div>
     </header>
@@ -106,6 +113,7 @@
             </tr>
         </table>
     </main>
+    <script src="./js/user.js"></script>
     <script>
         class nav {
             constructor(element) {
