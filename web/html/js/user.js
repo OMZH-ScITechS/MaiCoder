@@ -22,3 +22,21 @@ if (token) {
     loggedInDiv.style.display = 'none';
     loginLinks.style.display = 'flex';
 }
+
+function menu_toggle() {
+    const menu = document.querySelector('.logined_menu');
+    menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'flex' : 'none';
+
+    if (menu.style.display === 'flex') {
+        document.addEventListener('click', closeMenuOnClickOutside);
+    }
+}
+
+function closeMenuOnClickOutside(event) {
+    const menu = document.querySelector('.logined_menu');
+    const button = document.querySelector('.logined');
+    if (!menu.contains(event.target) && !button.contains(event.target)) {
+        menu.style.display = 'none';
+        document.removeEventListener('click', closeMenuOnClickOutside);
+    }
+}
