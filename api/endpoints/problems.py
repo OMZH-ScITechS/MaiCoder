@@ -181,9 +181,15 @@ async def submit_problem(
         return {"error": str(e)}, 500
 
 @router.post("/post")
-async def post_problem(request: Request):
+async def post_problem(
+    request: Request, 
+    current_user: str = Depends(get_current_user)
+):
     try:
         data = await request.json()
+
+        # Add username to the problem data
+        data["user"] = current_user
 
         existing_files = [f for f in os.listdir(problems_dir) if f.endswith(".json")]
         problem_id = str(len(existing_files) + 1).zfill(5)

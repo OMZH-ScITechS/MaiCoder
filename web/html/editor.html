@@ -163,9 +163,17 @@
 
         async function post_problem(data) {
             const url = "https://api.maicoder.f5.si/problems/post";
+            const token = localStorage.getItem("token")
+            if (!token) {
+                throw new Error("ログインしてください")
+            }
             try {
                 const response = await fetch(url, {
                     method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`  // BearerトークンをAuthorizationヘッダーに追加
+                    },
                     body: JSON.stringify(data),
                 });
                 if (!response.ok) {
