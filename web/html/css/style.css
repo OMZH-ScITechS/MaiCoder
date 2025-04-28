@@ -85,6 +85,7 @@ header img {
 
 .title h1 {
     font-size: 32px;
+    font-weight: 500;
 }
 
 .title p {
@@ -533,7 +534,6 @@ td.result {
     display: flex;
 }
 
-
 .logined_menu {
     width: 200px;
     position: absolute;
@@ -561,3 +561,16 @@ td.result {
 .logined_menu a:hover {
     background-color: #f3f3f3;
 }
+
+select {
+    padding: 8px 32px 8px 8px;
+    font-size: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 26px 26px;
+    
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
