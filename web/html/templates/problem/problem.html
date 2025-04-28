@@ -291,6 +291,16 @@
     <script src="../../js/common.js"></script>
     <script>
         document.querySelector("dialog").showModal()
+
+        async function set_submition() {
+            const response = await fetch(`https://api.maicoder.f5.si/submissions/${location.pathname.split('/')[2]}`)
+            const json = await response.json()
+            json.forEach(element =>{
+
+            })
+        }
+        set_submition() 
+
         let test_case = {
             input: [],
             output: []
