@@ -6,7 +6,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "Geist", "Noto Sans JP", serif;;
+    font-family: "Geist", "Noto Sans JP", serif;
+    ;
 }
 
 .form-container {
@@ -124,7 +125,7 @@ textarea.code {
 
 
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     transform: scale(1.4);
     transform-origin: center left;
 }
@@ -357,33 +358,6 @@ button.copy:active {
     align-items: center;
 }
 
-img.badge {
-    width: 50px;
-}
-
-.badge {
-    width: 46px;
-    height: 24px;
-    background-size: 100%;
-    display: inline-block;
-}
-
-.badge.ac {
-    background-image: url(../img/ac.svg);
-}
-
-.badge.tle {
-    background-image: url(../img/tle.svg);
-}
-
-.badge.ce {
-    background-image: url(../img/ce.svg);
-}
-
-.badge.wa {
-    background-image: url(../img/wa.svg);
-}
-
 .test-result {
     display: flex;
     gap: 4px;
@@ -482,7 +456,7 @@ header a.primary {
     color: white;
 }
 
-section.top .wrap{
+section.top .wrap {
     max-width: 500px;
     display: flex;
     flex-direction: column;
@@ -569,8 +543,36 @@ select {
     background-repeat: no-repeat;
     background-position: right 8px center;
     background-size: 26px 26px;
-    
+
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-  }
+}
+
+
+img.badge {
+    width: 50px;
+}
+
+.badge {
+    width: 46px;
+    height: 24px;
+    background-size: 100%;
+    display: inline-block;
+}
+
+.badge.ac {
+    background-image: url(../img/ac.svg);
+}
+
+.badge.tle {
+    background-image: url(../img/tle.svg);
+}
+
+.badge.ce {
+    background-image: url(../img/ce.svg);
+}
+
+.badge.wa {
+    background-image: url(../img/wa.svg);
+}

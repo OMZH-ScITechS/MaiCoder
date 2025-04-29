@@ -247,7 +247,7 @@
         <button class="copy" onclick="copy(this)">copy</button>
     </template>
     <template class="row">
-        <tr>
+        <tr class="data">
             <td class="user">pcsuke</td>
             <td class="compiler">Python3</td>
             <td class="status">AC</td>
@@ -283,7 +283,7 @@
             <p>実行時間: 3.0s, メモリ: 1GB</p>
         </div>
         <div class="right">
-            <button type="button" class="" onclick='document.querySelector("dialog").showModal()'>
+            <button type="button" class="" onclick='openModal()'>
                 <p>
                     <span class="material-symbols-outlined">
                         list
@@ -380,13 +380,16 @@
         async function set_submition() {
             const response = await fetch(`https://api.maicoder.f5.si/submissions/${location.pathname.split('/')[2]}`)
             const json = await response.json()
-            json.forEach(element => {
+            document.querySelectorAll("table tr.data").forEach((element)=>{
+                element.remove()
+            })
+            json.forEach(async element => {
                 console.log(element)
                 const template = document.querySelector("template.row");
                 const clone = template.content.cloneNode(true);
                 clone.querySelector("td.user").innerText = element.user;
                 clone.querySelector("td.compiler").innerText = element.compiler;
-                clone.querySelector("td.status").innerText = element.status;
+                clone.querySelector("td.status").innerHTML = await badge(element.test_results.status.toLowerCase());
                 clone.querySelector("td.time").innerText = new Date(element.time).toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-');
                 clone.querySelector("a").href = `/submissions/${element.id}`;
                 document.querySelector("dialog table").appendChild(clone);
@@ -497,15 +500,20 @@
             }
         }
 
+        function openModal(){
+            set_submition()
+            document.querySelector("dialog").showModal()
+        }
+
         async function problem_submit() {
             let data = {
                 user: "pcsuke",
                 compiler: document.querySelector("select.compiler").value.split(",")[1],
                 code: editor.getValue(),
             }
-            console.log(data)
-            await console.log(await get_submit(data))
-            //もしsucusessが帰ってきたらリダイレクト コンテストの自分の提出に
+            if (await get_submit(data)[1] !== 400){//エラーではないなら
+                openModal()
+            }
         }
 
         set_problem()
