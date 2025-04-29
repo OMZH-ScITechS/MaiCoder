@@ -171,20 +171,38 @@
             border: none;
         }
 
-        dialog::backdrop {
-            background-color: rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.1s ease-in-out;
+        dialog[closing] {
+            animation: dialogFadeOut 0.3s ease-in-out forwards;
         }
 
-        @keyframes fadeIn {
+        @keyframes dialogFadeOut {
             from {
-            background-color: rgba(0, 0, 0, 0);
+                opacity: 1;
+                transform: scale(1);
             }
+
             to {
-            background-color: rgba(0, 0, 0, 0.1);
+                opacity: 0;
+                transform: scale(0.9);
             }
         }
-        
+
+        dialog {
+            animation: dialogFadeIn 0.1s ease-in;
+        }
+
+        @keyframes dialogFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         dialog .top {
             position: absolute;
             width: 100%;
@@ -195,6 +213,25 @@
             background-color: #fff;
             overflow-y: scroll;
             height: 100%;
+        }
+
+        dialog.hide {
+            animation-name: modalOut;
+            animation-duration: .1s;
+            animation-fill-mode: fowards;
+            animation-timing-function: ease-out;
+        }
+
+        @keyframes modalOut {
+            0% {
+                transform: scale(100%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(95%);
+                opacity: 0;
+            }
         }
 
         table {
@@ -332,7 +369,12 @@
     <script>
         document.querySelector("dialog").addEventListener("click", (event) => {
             if (event.target === document.querySelector("dialog")) {
-                document.querySelector("dialog").close();
+                document.querySelector("dialog").classList.add('hide');
+                document.querySelector("dialog").addEventListener('animationend', function myfn() {
+                    document.querySelector("dialog").classList.remove('hide');
+                    document.querySelector("dialog").close();
+                    document.querySelector("dialog").removeEventListener('animationend', myfn);
+                })
             }
         });
         async function set_submition() {
