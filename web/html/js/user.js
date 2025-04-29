@@ -2,34 +2,29 @@
 document.addEventListener("DOMContentLoaded", () => {
     headerHTML = `
     <header>
-        <a href="/web/html/index.html">
-            <img src="/web/html/img/logo.svg" alt="MaiCoder">
+        <a href="/index.html">
+            <img src="/img/logo.svg" alt="MaiCoder">
         </a>
         <div>
-            <a href="/web/html/editor.html">作問エディタ</a>
-            <a href="/web/html/contests.html">コンテスト</a>
-            <a href="/web/html/problems.html">問題集</a>
+            <a href="/editor.html">作問エディタ</a>
+            <a href="/contests.html">コンテスト</a>
+            <a href="/problems.html">問題集</a>
             <div class="border"></div>
             <div class="div">
-                <a href="/web/html/login/signup.html">新規登録</a>
-                <a href="/web/html/login/login.html" class="primary">ログイン</a>
+                <a href="/login/signup.html">新規登録</a>
+                <a href="/login/login.html" class="primary">ログイン</a>
             </div>
             <button class="logined" style="display: none; padding: 4px; border: none;" onclick="menu_toggle()">
-                <img src="/web/html/img/user.svg" alt="user">
+                <img src="/img/user.svg" alt="user">
                 <p></p>
             </button>
             <div class="logined_menu">
-                <a href="/web/html/">プロフィール</a>
+                <a href="/">プロフィール</a>
                 <a href="">ログアウト</a>
             </div>
         </div>
     </header>
 `;
-    if (location.toString().includes("127.0.0.1")) { //開発環境
-        document.body.insertAdjacentHTML("afterbegin", headerHTML);
-    } else {
-        document.body.insertAdjacentHTML("afterbegin", headerHTML.replace("/web/html",""));
-    }
 
     // Retrieve the JWT token from localStorage
     const token = localStorage.getItem('jwt_token');
