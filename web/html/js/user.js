@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </header>
 `;
+    document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
     // Retrieve the JWT token from localStorage
     const token = localStorage.getItem('jwt_token');
