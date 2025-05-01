@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 import os
 import mysql.connector
 from hashlib import sha256
@@ -120,6 +120,6 @@ async def get_icon(user: str):
         with open(file_path, "rb") as f:
             content = f.read()
 
-        return JSONResponse(content=content, media_type="image/png", status_code=200)
+        return Response(content=content, media_type="image/png")
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
