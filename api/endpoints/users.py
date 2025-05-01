@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Depends
 from fastapi.responses import JSONResponse, Response
+from fastapi.security import HTTPBearer
 import os
 import mysql.connector
 from hashlib import sha256
@@ -11,6 +12,17 @@ router = APIRouter()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 image_dir = "/app/data/users/icons/"
+
+security = HTTPBearer()
+
+def get_current_user(token: str = Depends(security)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        return payload.get("sub")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 @router.post("/register")
 async def register_user(request: Request):
@@ -92,8 +104,11 @@ async def login_user(request: Request):
         return JSONResponse(content={"error": str(e)}, status_code=500)
     
 @router.put("/{user}/icon")
-async def upload_icon(user: str, request: Request):
+async def upload_icon(user: str, request: Request, current_user: str = Depends(get_current_user)):
     try:
+        if current_user != user:
+            raise HTTPException(status_code=403, detail="Forbidden")
+
         form = await request.form()
         file = form.get("image")
 

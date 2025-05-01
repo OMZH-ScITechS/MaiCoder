@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
             loggedInDiv.style.display = 'flex';
             loggedInDiv.querySelector('p').textContent = payload.sub || 'User';
             loginLinks.style.display = 'none';
+
+            // Fetch and set the user's profile image
+            const userImage = loggedInDiv.querySelector('img');
+            userImage.src = `https://api.maicoder.f5.si/users/${payload.sub}/icon`;
         } catch (error) {
             console.error('Failed to decode JWT payload:', error);
         }
