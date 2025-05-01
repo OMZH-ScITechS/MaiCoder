@@ -10,6 +10,8 @@ router = APIRouter()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+image_dir = "/app/data/users/icons/"
+
 @router.post("/register")
 async def register_user(request: Request):
     body = await request.json()
@@ -87,4 +89,37 @@ async def login_user(request: Request):
 
         return JSONResponse(content={"access_token": token, "token_type": "bearer"}, status_code=200)
     except mysql.connector.Error as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+    
+@router.put("/{user}/icon")
+async def upload_icon(user: str, request: Request):
+    try:
+        form = await request.form()
+        file = form.get("image")
+
+        if not file:
+            return JSONResponse(content={"error": "No file provided"}, status_code=400)
+
+        filename = f"{user}.png"
+        file_path = os.path.join(image_dir, filename)
+
+        with open(file_path, "wb") as f:
+            f.write(await file.read())
+
+        return JSONResponse(content={"message": "Icon uploaded successfully"}, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+@router.get("/{user}/icon")
+async def get_icon(user: str):
+    try:
+        file_path = os.path.join(image_dir, f"{user}.png")
+        if not os.path.exists(file_path):
+            file_path = os.path.join(image_dir, "default.png")
+
+        with open(file_path, "rb") as f:
+            content = f.read()
+
+        return JSONResponse(content=content, media_type="image/png", status_code=200)
+    except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
