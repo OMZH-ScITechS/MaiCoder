@@ -38,4 +38,4 @@ jobs:
         context: web/template
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/omzh-scitechs/maicoder-web-template:${{ steps.meta.outputs.tags }}
+        tags: ghcr.io/omzh-scitechs/maicoder-web-template:latest

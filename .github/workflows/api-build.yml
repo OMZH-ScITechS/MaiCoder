@@ -38,4 +38,4 @@ jobs:
         context: api
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/omzh-scitechs/maicoder-api:${{ steps.meta.outputs.tags }}
+        tags: ghcr.io/omzh-scitechs/maicoder-api:latest
