@@ -104,8 +104,9 @@ async def login_user(request: Request):
         return JSONResponse(content={"error": str(e)}, status_code=500)
     
 @router.put("/{user}/icon")
-async def upload_icon(user: str, request: Request, current_user: str = Depends(get_current_user)):
+async def upload_icon(user: str, request: Request, token: str = Depends(security)):
     try:
+        current_user = get_current_user(token)
         if current_user != user:
             raise HTTPException(status_code=403, detail="Forbidden")
 
@@ -122,6 +123,8 @@ async def upload_icon(user: str, request: Request, current_user: str = Depends(g
             f.write(await file.read())
 
         return JSONResponse(content={"message": "Icon uploaded successfully"}, status_code=200)
+    except HTTPException as e:
+        raise e
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
