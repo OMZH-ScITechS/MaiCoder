@@ -31,3 +31,8 @@ async def get_contest_page(subpath: str):
 async def get_quiz_page(subpath: str):
     content = await fetch_html_content('https://maicoder.f5.si/templates/problem/problem.html')
     return HTMLResponse(content=content)
+
+@app.get("/users/{subpath:path}", response_class=HTMLResponse)
+async def get_user_page(subpath: str):
+    content = await fetch_html_content('https://maicoder.f5.si/templates/users/profile.html')
+    return HTMLResponse(content=content)
