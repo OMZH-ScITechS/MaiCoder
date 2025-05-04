@@ -27,8 +27,6 @@ jobs:
           images: ghcr.io/omzh-scitechs/maicoder-api
           tags: |
             type=sha
-            type=ref,event=branch
-            type=ref,event=tag
     # 5. setup buildx
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1

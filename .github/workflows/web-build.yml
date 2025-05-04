@@ -26,6 +26,8 @@ jobs:
       uses: docker/metadata-action@v3
       with:
           images: ghcr.io/omzh-scitechs/maicoder-web
+          tags: |
+            type=sha
     # 5. setup buildx
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -39,4 +41,4 @@ jobs:
         context: web
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/omzh-scitechs/maicoder-web:latest
+        tags: ${{ steps.meta.outputs.tags }}
