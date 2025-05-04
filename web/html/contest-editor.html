@@ -108,9 +108,14 @@
                     },
                     body: JSON.stringify(payload)
                 });
-                
-                console.log(response)
 
+                if (response.ok) {
+                    const json = await response.json();
+                    console.log("Contest ID:", json.contest_id);
+                    window.location.href = "./contests/" + title;
+                } else {
+                    console.error("Failed to create contest:", response.status);
+                }
             } catch (error) {
                 console.error("Error:", error);
             }

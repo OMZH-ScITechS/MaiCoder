@@ -157,9 +157,12 @@
                     throw new Error(`レスポンスステータス: ${response.status}`);
                 }
                 const json = await response.json();
-                return json
+                if (json.problem_id) {
+                    window.location.href = './problems/' + json.problem_id;
+                }
+                return json;
             } catch (error) {
-                return error
+                return error;
             }
         }
     </script>
