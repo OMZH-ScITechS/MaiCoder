@@ -140,7 +140,7 @@
 
         async function post_problem(data) {
             const url = "https://api.maicoder.f5.si/problems/post";
-            const token = localStorage.getItem("token")
+            const token = localStorage.getItem("jwt_token")
             if (!token) {
                 throw new Error("ログインしてください")
             }
