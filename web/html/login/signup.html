@@ -52,8 +52,8 @@
                     });
                     if (response.status == 200) {
                         let data = await response.json();
-                        console.log(data);
                         localStorage.setItem("jwt_token", data.access_token);
+                        window.location.href = '/';
                     }
                 } catch (error) {
                     console.error("エラーが発生しました:", error);
