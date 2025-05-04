@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
             <div class="logined_menu">
                 <a href="/">プロフィール</a>
-                <a href="">ログアウト</a>
+                <a href="" id="logout">ログアウト</a>
             </div>
         </div>
     </header>
@@ -54,6 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
         loggedInDiv.style.display = 'none';
         loginLinks.style.display = 'flex';
     }
+
+    const logoutLink = document.getElementById('logout');
+    logoutLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        localStorage.removeItem('jwt_token');
+        window.location.href = '/';
+    });
 });
 
 function menu_toggle() {
