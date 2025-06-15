@@ -11,15 +11,16 @@ async def get_contest_datail(subpath: str):
     try:
         if subpath == "":  # Root path
             all_files = []
-            for filename in os.listdir(contests_dir):
-                if filename.endswith(".json"):
-                    with open(os.path.join(contests_dir, filename), "r") as file:
+            for contest_name in os.listdir(contests_dir):
+                contest_path = os.path.join(contests_dir, contest_name, "about.json")
+                if os.path.isfile(contest_path):
+                    with open(contest_path, "r") as file:
                         file_content = json.load(file)
                         del file_content["problems"]
                         all_files.append(file_content)
             return all_files
         else:
-            with open(f"{contests_dir}{subpath}.json", "r") as file:
+            with open(f"{contests_dir}{subpath}/about.json", "r") as file:
                 content = json.load(file)
                 contest_date = datetime.fromisoformat(content.get("date"))
                 if contest_date > datetime.now():
