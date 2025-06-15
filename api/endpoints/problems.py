@@ -8,6 +8,7 @@ from datetime import datetime
 
 router = APIRouter()
 problems_dir = "/app/data/problems/"
+contests_dir = "/app/data/contests/"
 submit_dir = "/app/data/submissions/"
 SECRET_KEY = os.getenv("SECRET_KEY")
 security = HTTPBearer()
@@ -45,6 +46,19 @@ async def get_problems(subpath: str):
         return {"error": "Invalid JSON format"}, 400
     except Exception as e:
         return {"error": str(e)}, 500
+
+def fetch_active_contests():
+    try:
+        contests_url = "http://api.maicoder.f5.si/contests/active"  # Replace with the actual endpoint
+        response = requests.get(contests_url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch active contests: {response.status_code}")
+            return []
+    except Exception as e:
+        print(f"Error fetching active contests: {e}")
+        return []
 
 async def run_tests(subpath: str, submit_id: str):
     try:
@@ -118,6 +132,34 @@ async def run_tests(subpath: str, submit_id: str):
                 json.dump(submission_data, submission_file)
 
             print(f"Test {i}/{total_tests} processed for submission {submit_id} in {subpath}")
+
+        # If status is AC, fetch active contests and perform actions
+        if status == "AC":
+            active_contests = fetch_active_contests()
+            for contest in active_contests:
+                # Example: Check if the problem belongs to the contest and update files
+                if subpath in contest.get("problems", []):
+                    contest_path = f"{contests_dir}{contest['id']}"
+                    result_file_path = f"{contest_path}/result.json"
+
+                    if os.path.exists(result_file_path):
+                        with open(result_file_path, "r") as result_file:
+                            contest_results = json.load(result_file)
+
+                        # Update contest results (example logic)
+                        # Ensure the 'test' key exists in 'score'
+                        username = submission_data.get("user", "unknown")
+                        if username not in contest_results["score"]:
+                            contest_results["score"][username] = {"problems": []}
+
+                        # Append the problem ID, score, and user to the 'problems' list
+                        contest_results["score"][username]["problems"].append({
+                            subpath: submission_data.get("score", 0)
+                        })
+
+                        with open(result_file_path, "w") as result_file:
+                            json.dump(contest_results, result_file)
+
     except Exception as e:
         print(f"Error running tests for submission {submit_id} in {subpath}: {e}")
 
